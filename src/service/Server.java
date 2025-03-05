@@ -1,4 +1,4 @@
-package TeamProject2.service;
+package service;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,8 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import TeamProject2.mode.vo.Chat;
-import TeamProject2.mode.vo.Room;
+import mode.vo.Chat;
+import mode.vo.Room;
 
 public class Server {
 

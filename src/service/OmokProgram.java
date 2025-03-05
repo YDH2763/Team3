@@ -1,13 +1,11 @@
-package TeamProject2.service;
+package service;
 
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
-import TeamProject2.mode.vo.Field;
-import TeamProject2.mode.vo.Stone;
+import mode.vo.Field;
+import mode.vo.Stone;
 
 public class OmokProgram {
 

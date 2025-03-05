@@ -1,4 +1,4 @@
-package TeamProject2.mode.vo;
+package mode.vo;
 
 import java.io.Serializable;
 

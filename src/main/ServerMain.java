@@ -1,9 +1,9 @@
-package TeamProject2.main;
+package main;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import TeamProject2.service.Server;
+import service.Server;
 
 public class ServerMain {
 

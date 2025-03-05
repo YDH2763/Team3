@@ -1,9 +1,9 @@
-package TeamProject2.main;
+package main;
 
 import java.net.Socket;
 import java.util.Scanner;
 
-import TeamProject2.service.Client;
+import service.Client;
 
 public class ClientMain {
 

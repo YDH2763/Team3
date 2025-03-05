@@ -1,4 +1,4 @@
-package TeamProject2.service;
+package service;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import TeamProject2.mode.vo.Chat;
+import mode.vo.Chat;
 
 /*
  * Client 클래스를 이용하여
