@@ -81,9 +81,7 @@ public class Room {
 			oos.writeUTF("[" + omok.winner + "이 승리하였습니다]");
 			oos.flush();
 			
-		} catch(Exception e){
-			e.printStackTrace();
-		}
+		} catch(Exception e){}
 	}
 	
 	

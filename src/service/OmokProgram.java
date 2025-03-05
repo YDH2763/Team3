@@ -36,9 +36,7 @@ public class OmokProgram {
 			oos2.writeBoolean(gameOver);
 			oos2.flush();
 			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		} catch(Exception e) {}
 	}
 	
 	public void input(ObjectOutputStream oos, int x, int y) {
@@ -96,9 +94,7 @@ public class OmokProgram {
 					whiteList.remove(tmp);
 				}
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		} catch(Exception e) {}
 		
 	}
 	
@@ -127,7 +123,6 @@ public class OmokProgram {
 			return true;
 			
 		} catch(Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
