@@ -287,6 +287,7 @@ public class Client {
 				
 			} catch (Exception e) {
 				System.out.println("[송신 중 오류 발생]");
+				e.printStackTrace();
 			}
 		});
 		th.start();
@@ -301,6 +302,7 @@ public class Client {
 			}
 		} catch (Exception e) {
 			System.out.println("[수신 중 오류 발생]");
+			e.printStackTrace();
 		}
 	}
 

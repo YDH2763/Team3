@@ -112,7 +112,9 @@ public class Server {
 					}
 				}
 			}
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void makeRoom(ObjectOutputStream oos, ObjectInputStream ois) {
@@ -158,6 +160,7 @@ public class Server {
 			receive(user, oos, ois);
 		} catch(Exception e) {
 			System.out.println("대기실 입장 중 예기치 못한 오류 발생");
+			e.printStackTrace();
 		}
 	}
 
@@ -221,6 +224,7 @@ public class Server {
 			}
 		} catch (Exception e) {
 			System.out.println("대기실 수신 중 예기치 못한 오류 발생");
+			e.printStackTrace();
 		}
 	}
 
@@ -241,6 +245,7 @@ public class Server {
 			
 		} catch (Exception e) {
 			System.out.println("메세지 송신 중 예기치 못한 오류 발생");
+			e.printStackTrace();
 		}
 	}
 	
@@ -253,6 +258,7 @@ public class Server {
 				oos.flush();
 		} catch (Exception e) {
 			System.out.println("Object 송신 중 예기치 못한 오류 발생");
+			e.printStackTrace();
 		}
 	}
 }
