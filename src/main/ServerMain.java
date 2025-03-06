@@ -20,7 +20,7 @@ public class ServerMain {
 			while(true) {
 				//연결 대기, 요청 수락 후 소켓 객체 생성
 				
-				Socket s = ss.accept();
+				Socket s = ss.accept(); 
 				
 				System.out.println("[연결 성공!]");
 				
