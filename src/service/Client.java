@@ -304,6 +304,15 @@ public class Client {
 		}
 	}
 
+	private void printLogin() {
+		System.out.println("--------메뉴--------");
+		System.out.println("1. 로그인");
+		System.out.println("2. 회원가입");
+		System.out.println("3. 종료하기"); 
+		System.out.println("-------------------");
+		System.out.print("메뉴 입력: ");
+	}
+	
 	private void printMenu() {
 		System.out.println("--------메뉴--------");
 		System.out.println("1. 대기실 입장하기");

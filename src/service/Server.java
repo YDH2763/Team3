@@ -78,7 +78,7 @@ public class Server {
 	}
 
 	private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
-		System.out.println("[들어갈 방 번호 입력 대기 중]");
+		System.out.println("[들어갈 방 번호 입력 대기 중]"); 
 		try {
 			while(true) {
 				int roomNum = ois.readInt();
