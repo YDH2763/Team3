@@ -25,6 +25,7 @@ BEGIN
     DECLARE _RO_B_U_NAME VARCHAR(10);
     DECLARE _RO_W_U_NAME VARCHAR(10);
     
+    # new => 이 문구는 자주 사용하게 될것
     SET _RE_WINNER = (
 		SELECT NEW.RE_WINNER);
     SET _RO_B_U_NAME = (
