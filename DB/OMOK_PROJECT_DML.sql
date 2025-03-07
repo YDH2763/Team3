@@ -10,3 +10,7 @@ INSERT ROOM(RO_NUM, RO_B_U_NAME, RO_W_U_NAME) VALUES
     
 INSERT INTO RESULT(RE_WINNER, RE_RO_ID) VALUES
 	("BLACK", 1), ("DRAW", 2), ("BLACK", 3), ("WHITE", 4);
+
+SELECT * FROM omok.user;    
+SELECT * FROM omok.result;
+SELECT * FROM omok.score;
