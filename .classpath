@@ -6,17 +6,17 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Jave_12.30/dev/jar/lombok.jar">
+	<classpathentry kind="lib" path="D:/dev/eclipse/lombok.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Jave_12.30/dev/jar/mybatis-3.5.17.jar">
+	<classpathentry kind="lib" path="D:/jar/mybatis-3.5.17.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Jave_12.30/dev/jar/mysql-connector-j-9.2.0.jar">
+	<classpathentry kind="lib" path="D:/jar/mysql-connector-j-9.2.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
