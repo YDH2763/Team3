@@ -38,9 +38,9 @@ public class Server {
 				while(true) {
 					//메뉴를 입력 받음
 					int menu = ois.readInt();
-					System.out.println("[" + oos + "메뉴 " + menu + " 입력 받음]");
+					System.out.println("[" + oos + "로그인 메뉴 " + menu + " 입력 받음]");
 					//입력받은 메뉴에 맞는 기능을 실행
-					runMenu(menu, oos, ois);
+					runLoginMenu(menu, oos, ois);
 				}
 				
 			} catch (IOException e) {
@@ -49,12 +49,50 @@ public class Server {
 				System.out.println("대기실 인원: " + chatList.size());
 				System.out.println("[연결 끊김]");
 			} catch (Exception e) {
-				System.out.println("메뉴 수신 중 예기치 못한 오류 발생");
+				System.out.println("로그인 메뉴 수신 중 예기치 못한 오류 발생");
 				e.printStackTrace();
 			}
 		});
 		
 		th.start();
+	}
+
+	private void runLoginMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
+		switch (menu) {
+		case 1:
+			logIn(oos, ois);
+			System.out.println(oos + "로그인 진행");
+			try {
+				while(true) {
+					int mainMenu = ois.readInt();
+					if(mainMenu == 4) {
+						System.out.println(oos + "메인 메뉴 종료, 로그인 메뉴로 복귀");
+						break;
+					}
+					System.out.println("[" + oos + "메인 메뉴 " + mainMenu + " 입력 받음]");
+					runMenu(mainMenu, oos, ois);
+				}
+			} catch (Exception e) {
+				System.out.println("메인 메뉴 수신 중 예기치 못한 오류 발생");
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			signIn(oos, ois);
+			System.out.println(oos + "회원가입 진행");
+			System.out.println(oos + "회원가입 종료, 로그인 메뉴로 복귀");
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
+		
+	}
+
+	private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
+		
 	}
 
 	private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {

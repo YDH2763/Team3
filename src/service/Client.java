@@ -33,7 +33,7 @@ public class Client {
 			
 			int menu = 0;
 			do {
-				printMenu();
+				printLoginMenu();
 				
 				try{
 					menu = sc.nextInt();
@@ -47,13 +47,60 @@ public class Client {
 				oos.writeInt(menu);
 				oos.flush();
 				
-				runMenu(menu, ois, oos);
+				runLoginMenu(menu, ois, oos);
 				
-			}while(menu != 4);
+			}while(menu != 3);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void runLoginMenu(int menu, ObjectInputStream ois, ObjectOutputStream oos) {
+		switch (menu) {
+		case 1:
+			logIn(oos, ois);
+			System.out.println("로그인을 진행했습니다");
+			try {
+				int mainMenu = 0;
+				do {
+					printMenu();
+					
+					try{
+						mainMenu = sc.nextInt();
+						sc.nextLine();
+					} catch(InputMismatchException e) {
+						System.out.println("[입력이 올바르지 않습니다]");
+						sc.nextLine();
+						continue;
+					}
+					
+					oos.writeInt(mainMenu);
+					oos.flush();
+					
+					runMenu(mainMenu, ois, oos);
+					
+				}while(mainMenu != 4);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			signIn(oos, ois);
+			System.out.println("회원가입을 진행했습니다");
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
+		
+	}
+
+	private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
+		
 	}
 
 	private void runMenu(int menu, ObjectInputStream ois, ObjectOutputStream oos) {
@@ -304,7 +351,7 @@ public class Client {
 		}
 	}
 
-	private void printLogin() {
+	private void printLoginMenu() {
 		System.out.println("--------메뉴--------");
 		System.out.println("1. 로그인");
 		System.out.println("2. 회원가입");
@@ -318,7 +365,7 @@ public class Client {
 		System.out.println("1. 대기실 입장하기");
 		System.out.println("2. 오목 게임 방 만들기");
 		System.out.println("3. 오목 게임 방 들어가기");
-		System.out.println("4. 종료하기");
+		System.out.println("4. 로그아웃");
 		System.out.println("-------------------");
 		System.out.print("메뉴 입력: ");
 	}
