@@ -10,4 +10,10 @@
 			<result property="whiteUser" column="ro_w_u_name"/>
   	</resultMap>
   	
+  	<insert id ="insertRoom">
+  		insert into room(ro_num, ro_b_u_name, ro_b_w_name)
+  		values(#{roomNum},#{player1}
+  				,#{player2});
+  	</insert>
+  	
   </mapper>
