@@ -16,13 +16,12 @@ import mode.vo.Chat;
 
 public class Client {
 
-	private String id;
 	private Socket s;
+	private String id;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
-	public Client(String id, Socket s) {
-		this.id = id;
+	public Client(Socket s) {
 		this.s = s;
 	}
 
@@ -96,7 +95,18 @@ public class Client {
 	}
 
 	private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
-		
+		try {
+			System.out.print("닉네임 : ");
+			id = sc.nextLine();
+			oos.writeUTF(id);
+			oos.flush();
+			System.out.print("비밀번호 : ");
+			String pw = sc.nextLine();
+			oos.writeUTF(pw);
+			oos.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {

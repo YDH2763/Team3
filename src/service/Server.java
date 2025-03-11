@@ -88,7 +88,16 @@ public class Server {
 	}
 
 	private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
-		
+		String id;
+		String pw;
+		try {
+			id = ois.readUTF();
+			System.out.println("닉네임 "  + id + " 수신");
+			pw = ois.readUTF();
+			System.out.println("비밀번호 "  + pw + " 수신");
+		} catch (Exception e) {
+			System.out.println("로그인 수신 중 예기치 못한 오류 발생");
+		}
 	}
 
 	private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
