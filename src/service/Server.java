@@ -9,6 +9,7 @@ import java.util.List;
 
 import mode.vo.Chat;
 import mode.vo.Room;
+import mode.vo.User;
 
 public class Server {
 
@@ -95,6 +96,14 @@ public class Server {
          System.out.println("닉네임 "  + id + " 수신");
          pw = ois.readUTF();
          System.out.println("비밀번호 "  + pw + " 수신");
+         
+         User user = new User(id, pw);
+         //생성된 학생 정보를 매니저에게 주면서 등록하라고 요청한 후 성공 여부를 알려달라고 함
+         if(!insertUser(user)) {
+        	 System.out.println("이미 등록된 학생입니다.");
+ 			return;
+ 		}
+  		System.out.println("학생을 등록했습니다.");
       } catch (Exception e) {
          System.out.println("로그인 수신 중 예기치 못한 오류 발생");
       }

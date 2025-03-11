@@ -3,6 +3,7 @@ package service;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,10 +15,15 @@ import mode.vo.Chat;
  * 서버와 클라이언트가 문자열을 주고받는 예제
  */
 
-public class Client {
+public class Client implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7171515314751571836L;
 	private Socket s;
 	private String id;
+	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
@@ -101,7 +107,7 @@ public class Client {
 			oos.writeUTF(id);
 			oos.flush();
 			System.out.print("비밀번호 : ");
-			String pw = sc.nextLine();
+			pw = sc.nextLine();
 			oos.writeUTF(pw);
 			oos.flush();
 		} catch (Exception e) {
