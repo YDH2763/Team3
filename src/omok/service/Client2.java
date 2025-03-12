@@ -159,6 +159,7 @@ public class Client2{
 				int roomNum;
 				try{
 					roomNum = sc.nextInt();
+					oos.writeUTF(id);
 					sc.nextLine();
 				} catch(InputMismatchException e) {
 					System.out.println("[입력이 올바르지 않습니다]");
@@ -242,6 +243,7 @@ public class Client2{
 				int roomNum;
 				try{
 					roomNum = sc.nextInt();
+					oos.writeUTF(id);
 					sc.nextLine();
 				} catch(InputMismatchException e) {
 					System.out.println("[입력이 올바르지 않습니다]");

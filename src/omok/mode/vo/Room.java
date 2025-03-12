@@ -19,11 +19,15 @@ public class Room {
    private boolean full = false;
    private boolean allOut = false;
    
+   private String bName;
+   private String wName;
    
    private OmokProgram omok;
    
-   public Room(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
+   public Room(int roomNum, String bName, String wName, ObjectOutputStream oos, ObjectInputStream ois) {
       this.roomNum = roomNum;
+      this.bName= bName;
+      this.wName= wName;
       oosList.add(oos);
       oisList.add(ois);
    }

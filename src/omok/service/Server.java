@@ -193,8 +193,9 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
       try {
          while(true) {
             int roomNum = ois.readInt();
+            String id = ois.readUTF();
             System.out.println("[" + oos + " 입장방 번호 " + roomNum + " 입력 받음]");
-            Room tmp = new Room(roomNum, oos, ois);
+            Room tmp = new Room(roomNum, " ", id, oos, ois);
             if(roomList.isEmpty() || !roomList.contains(tmp)) {
                oos.writeBoolean(false);
                send(oos, "[존재하지 않는 방입니다]");
@@ -232,8 +233,9 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
          Room room;
          while(true) {
             int roomNum = ois.readInt();
+            String id = ois.readUTF();
             System.out.println("[" + oos + " 생성방 번호 " + roomNum + " 입력 받음]");
-            room = new Room(roomNum, oos, ois);
+            room = new Room(roomNum, id, " ", oos, ois);
             boolean exist = roomList.contains(room);
             if(exist) {
                oos.writeBoolean(false);
