@@ -15,15 +15,15 @@ import omok.mode.vo.Chat;
  * 서버와 클라이언트가 문자열을 주고받는 예제
  */
 
-public class Client{
+public class Client1{
 
 	private Socket s;
-	private String id="김가람";
+	private String id;
 	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
-	public Client(Socket s) {
+	public Client1(Socket s) {
 		this.s = s;
 	}
 
