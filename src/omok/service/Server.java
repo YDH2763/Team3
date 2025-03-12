@@ -131,7 +131,7 @@ public class Server {
 		   System.out.println("비밀번호 "  + pw + " 수신");
          
 		   User user = new User(id, pw);
-		   //생성된 학생 정보를 매니저에게 주면서 등록하라고 요청한 후 성공 여부를 알려달라고 함
+		   //생성된 유저 정보를 등록 요청한 후 성공 여부 받아옴
 		   if(!insertUser(user)) {
 			   System.out.println("[중복된 회원]");
 			   oos.writeBoolean(false);
