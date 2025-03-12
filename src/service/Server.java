@@ -1,12 +1,20 @@
 package service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import dao.ScoreDAO;
+import dao.UserDAO;
 import mode.vo.Chat;
 import mode.vo.Room;
 import mode.vo.User;
@@ -21,11 +29,24 @@ public class Server {
    private static List<Room> roomList = new ArrayList<Room>();
    private Socket s;
    private final static String EXIT = "q";
+   private UserDAO userDao;
    
    public Server(Socket s) {
       this.s = s;
+      String resource = "config/mybatis-config.xml";
+      InputStream inputStream;
+      SqlSession session;
+      try {
+    	  inputStream = Resources.getResourceAsStream(resource);
+    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    	  session = sessionFactory.openSession(true);
+    	  userDao = session.getMapper(UserDAO.class);
+      } catch (IOException e) {
+    	  e.printStackTrace();
+      }
    }
 
+   
    public void connected() {
       Thread th = new Thread(()->{
          ObjectOutputStream oos = null;
@@ -89,31 +110,66 @@ public class Server {
    }
 
    private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
-      String id;
-      String pw;
-      try {
-         id = ois.readUTF();
-         System.out.println("닉네임 "  + id + " 수신");
-         pw = ois.readUTF();
-         System.out.println("비밀번호 "  + pw + " 수신");
-         
-         User user = new User(id, pw);
-         //생성된 학생 정보를 매니저에게 주면서 등록하라고 요청한 후 성공 여부를 알려달라고 함
-         if(!insertUser(user)) {
-        	 System.out.println("이미 등록된 학생입니다.");
- 			return;
- 		}
-  		System.out.println("학생을 등록했습니다.");
-      } catch (Exception e) {
-         System.out.println("로그인 수신 중 예기치 못한 오류 발생");
-      }
+	   String id;
+	   String pw;
+	   try {
+		   id = ois.readUTF();
+		   System.out.println("닉네임 "  + id + " 수신");
+		   pw = ois.readUTF();
+		   System.out.println("비밀번호 "  + pw + " 수신");
+	   } catch (Exception e) {
+		   System.out.println("로그인 수신 중 예기치 못한 오류 발생");
+	   }
    }
 
    private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
-      
+	   String id;
+	   String pw;
+	   try {
+		   id = ois.readUTF();
+		   System.out.println("닉네임 "  + id + " 수신");
+		   pw = ois.readUTF();
+		   System.out.println("비밀번호 "  + pw + " 수신");
+         
+		   User user = new User(id, pw);
+		   //생성된 학생 정보를 매니저에게 주면서 등록하라고 요청한 후 성공 여부를 알려달라고 함
+		   if(!insertUser(user)) {
+			   System.out.println("[중복된 회원]");
+			   oos.writeBoolean(false);
+			   oos.flush();
+			   return;
+		   }
+		   System.out.println("[회원 등록 성공]");
+		   oos.writeBoolean(true);
+		   oos.flush();
+	   } catch (Exception e) {
+		   System.out.println("로그인 수신 중 예기치 못한 오류 발생");
+		   e.printStackTrace();
+	   }
    }
 
-   private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
+   private boolean insertUser(User user) {
+	   if(user == null) return false;
+		
+	   //학생 중복 확인
+	   if(contains(user)) return false;
+		
+	   //학생이 중복되지 않으면 학생을 추가
+	   return userDao.insertStudent(user);
+   }
+
+	private boolean contains(User user) {
+		//DB에서 user를 이용하여 학생 정보를 가져옴
+		User dbUser = userDao.selectStudent(user);
+		
+		//DB에서 가져온 학생 정보가 있으면 중복 -> true를 반환
+		if(dbUser != null) {
+			return true;
+		}
+		return false;
+	}
+
+private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
       switch (menu) {
       case 1:
          chat(oos, ois);

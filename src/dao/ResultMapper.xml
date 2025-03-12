@@ -3,10 +3,4 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="resultDAO">
-  	<resultMap type ="" id="resultMap">
-  			<id property="resultNum" column="re_num"/>
-			<result property="winner" column="re_winner"/>
-			<result property="date" column="re_date"/>
-			<result property="whiteUser" column="re_ro_id"/>          
-  	</resultMap>
   </mapper>

@@ -3,12 +3,4 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="ScoreDAO">
-  	<resultMap type ="" id="ScoreMap">
-  			<id property="scoreNum" column="s_num"/>
-			<result property="position" column="s_position"/>
-			<result property="count" column="s_count"/>
-			<result property="count" column="s_count"/>
-			<result property="count" column="s_count"/>
-			<result property="count" column="s_count"/>
-  	</resultMap>
   </mapper>

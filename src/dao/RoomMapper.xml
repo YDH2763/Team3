@@ -3,17 +3,4 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="RoomDAO">
-  	<resultMap type ="mode.vo.Room" id="RoomMap">
-  			<id property="roomId" column="ro_id"/>
-			<result property="roomNum" column="ro_num"/>
-			<result property="blackUser" column="ro_b_u_name"/>
-			<result property="whiteUser" column="ro_w_u_name"/>
-  	</resultMap>
-  	
-  	<insert id ="insertRoom">
-  		insert into room(ro_num, ro_b_u_name, ro_b_w_name)
-  		values(#{roomNum},#{player1}
-  				,#{player2});
-  	</insert>
-  	
   </mapper>

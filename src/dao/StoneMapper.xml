@@ -3,11 +3,4 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="StoneDAO">
-  		<resultMap type ="mode.vo.Stone" id="GiboMap">
-  			<id property="id" column="g_id"/>
-			<result property="count" column="g_count"/>
-			<result property="xLine" column="g_x"/>
-			<result property="yLine" column="g_y"/>
-			<result property="userId" column="g_ro_id"/>
-  		</resultMap>
     </mapper>

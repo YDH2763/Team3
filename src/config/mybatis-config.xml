@@ -8,17 +8,17 @@
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
         <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/student"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/omok"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
       </dataSource>
     </environment>
   </environments>
   <mappers>
-    <mapper resource="TeamProject2/dao/StoneMapper.xml"/>
-    <mapper resource="TeamProject2/dao/RoomMapper.xml"/>
-    <mapper resource="TeamProject2/dao/UserMapper.xml"/>
-    <mapper resource="TeamProject2/dao/ResultMapper.xml"/>
-    <mapper resource="TeamProject2/dao/ScoreMapper.xml"/>
+    <mapper resource="Team3/src/dao/StoneMapper.xml"/>
+    <mapper resource="Team3/src/dao/RoomMapper.xml"/>
+    <mapper resource="Team3/src/dao/UserMapper.xml"/>
+    <mapper resource="Team3/src/dao/ResultMapper.xml"/>
+    <mapper resource="Team3/src/dao/ScoreMapper.xml"/>
   </mappers>
 </configuration>

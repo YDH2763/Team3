@@ -15,12 +15,8 @@ import mode.vo.Chat;
  * 서버와 클라이언트가 문자열을 주고받는 예제
  */
 
-public class Client implements Serializable {
+public class Client{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7171515314751571836L;
 	private Socket s;
 	private String id;
 	private String pw;
@@ -116,7 +112,23 @@ public class Client implements Serializable {
 	}
 
 	private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
-		
+		try {
+			System.out.print("닉네임 : ");
+			id = sc.nextLine();
+			oos.writeUTF(id);
+			oos.flush();
+			System.out.print("비밀번호 : ");
+			pw = sc.nextLine();
+			oos.writeUTF(pw);
+			oos.flush();
+			
+			boolean success = ois.readBoolean();
+			
+			if(success) System.out.println("회원가입 되었습니다.");
+			else System.out.println("이미 등록된 회원입니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void runMenu(int menu, ObjectInputStream ois, ObjectOutputStream oos) {

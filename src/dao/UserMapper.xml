@@ -2,11 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="dao.UserDAO">
-		<resultMap type ="" id="UserMap">
-  			<id property="name" column="u_name"/>
-			<result property="password" column="u_pw"/>
-			<result property="del" column="u_del"/>
-  		</resultMap>
+<mapper namespace="dao.UserDAO">
+
+	<resultMap type ="" id="UserMap">
+  		<id property="id" column="u_name"/>
+		<result property="pw" column="u_pw"/>
+  	</resultMap>
 	
-	</mapper>
+	<insert id="insertUser">
+		INSERT INTO USER(U_NAME, U_PW) VALUES
+			(#{USER.ID}, #{USER.PW})
+	</insert>
+	
+	<select id="selectUser">
+		SELECT *
+		FROM USER
+		WHERE U_NAME = #{USER.ID} AND U_PW = #{USER.PW}
+	</select>
+</mapper>
