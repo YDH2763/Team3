@@ -81,8 +81,7 @@ public class Server {
    private void runLoginMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
       switch (menu) {
       case 1:
-         logIn(oos, ois);
-         System.out.println(oos + "로그인 진행");
+         if(!logIn(oos, ois)) break;
          try {
             while(true) {
                int mainMenu = ois.readInt();
@@ -100,7 +99,6 @@ public class Server {
          break;
       case 2:
          signIn(oos, ois);
-         System.out.println(oos + "회원가입 진행");
          System.out.println(oos + "회원가입 종료, 로그인 메뉴로 복귀");
          break;
       default:
@@ -108,7 +106,7 @@ public class Server {
       }
    }
 
-   private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
+   private boolean logIn(ObjectOutputStream oos, ObjectInputStream ois) {
 	   String id;
 	   String pw;
 	   try {
@@ -116,8 +114,22 @@ public class Server {
 		   System.out.println("닉네임 "  + id + " 수신");
 		   pw = ois.readUTF();
 		   System.out.println("비밀번호 "  + pw + " 수신");
+		   
+		   User user = new User(id, pw);
+		   
+		   if(contains(user)) {
+			   oos.writeBoolean(true);
+			   oos.flush();
+			   return true;
+		   } else {
+			   oos.writeBoolean(false);
+			   oos.flush();
+			   return false;
+		   }
 	   } catch (Exception e) {
 		   System.out.println("로그인 수신 중 예기치 못한 오류 발생");
+		   e.printStackTrace();
+		   return false;
 	   }
    }
 
@@ -127,6 +139,20 @@ public class Server {
 	   try {
 		   id = ois.readUTF();
 		   System.out.println("닉네임 "  + id + " 수신");
+		   
+		   User tmp = new User(id);
+		   
+		   if(!isNewId(tmp)) {
+			   System.out.println("[중복된 닉네임]");
+			   oos.writeBoolean(false); // success
+			   oos.flush();
+			   return;
+		   } else {
+			   System.out.println("[사용가능한 닉네임]");
+			   oos.writeBoolean(true);
+			   oos.flush();			   
+		   }
+		   
 		   pw = ois.readUTF();
 		   System.out.println("비밀번호 "  + pw + " 수신");
          
@@ -136,16 +162,27 @@ public class Server {
 			   System.out.println("[중복된 회원]");
 			   oos.writeBoolean(false);
 			   oos.flush();
-			   return;
+		   } else {
+			   System.out.println("[회원 등록 성공]");
+			   oos.writeBoolean(true);
+			   oos.flush();			   
 		   }
-		   System.out.println("[회원 등록 성공]");
-		   oos.writeBoolean(true);
-		   oos.flush();
 	   } catch (Exception e) {
 		   System.out.println("로그인 수신 중 예기치 못한 오류 발생");
 		   e.printStackTrace();
 	   }
    }
+
+   private boolean isNewId(User tmp) {
+	   if(tmp == null) return false;
+		
+	   //닉네임 중복 확인
+	   if(contains(tmp)) return false;
+		
+	   //학생이 중복되지 않으면 학생을 추가
+	   return true;
+   }
+
 
    private boolean insertUser(User user) {
 	   if(user == null) return false;
@@ -158,6 +195,14 @@ public class Server {
    }
 
 	private boolean contains(User user) {
+		
+		if(user.getPw() == null) {
+			//중복된 아이디가 있는지 체크함
+			String id = userDao.checkId(user);
+			if(id != null) {
+				return true;
+			}
+		}
 		//DB에서 user를 이용하여 학생 정보를 가져옴
 		User dbUser = userDao.selectUser(user);
 		
@@ -165,6 +210,7 @@ public class Server {
 		if(dbUser != null) {
 			return true;
 		}
+		
 		return false;
 	}
 
