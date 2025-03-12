@@ -1,4 +1,4 @@
-package service;
+package omok.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,11 +13,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import dao.ScoreDAO;
-import dao.UserDAO;
-import mode.vo.Chat;
-import mode.vo.Room;
-import mode.vo.User;
+import omok.dao.UserDAO;
+import omok.mode.vo.Chat;
+import omok.mode.vo.Room;
+import omok.mode.vo.User;
 
 public class Server {
 
@@ -33,7 +32,7 @@ public class Server {
    
    public Server(Socket s) {
       this.s = s;
-      String resource = "config/mybatis-config.xml";
+      String resource = "omok/config/mybatis-config.xml";
       InputStream inputStream;
       SqlSession session;
       try {
@@ -155,12 +154,12 @@ public class Server {
 	   if(contains(user)) return false;
 		
 	   //학생이 중복되지 않으면 학생을 추가
-	   return userDao.insertStudent(user);
+	   return userDao.insertUser(user);
    }
 
 	private boolean contains(User user) {
 		//DB에서 user를 이용하여 학생 정보를 가져옴
-		User dbUser = userDao.selectStudent(user);
+		User dbUser = userDao.selectUser(user);
 		
 		//DB에서 가져온 학생 정보가 있으면 중복 -> true를 반환
 		if(dbUser != null) {

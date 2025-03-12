@@ -15,10 +15,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="Team3/src/dao/StoneMapper.xml"/>
-    <mapper resource="Team3/src/dao/RoomMapper.xml"/>
-    <mapper resource="Team3/src/dao/UserMapper.xml"/>
-    <mapper resource="Team3/src/dao/ResultMapper.xml"/>
-    <mapper resource="Team3/src/dao/ScoreMapper.xml"/>
+    <mapper resource="omok/dao/UserMapper.xml"/>
   </mappers>
 </configuration>

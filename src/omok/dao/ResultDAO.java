@@ -1,4 +1,4 @@
-package dao;
+package omok.dao;
 
 public interface ResultDAO {
 

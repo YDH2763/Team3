@@ -1,4 +1,4 @@
-package mode.vo;
+package omok.mode.vo;
 
 import java.io.Serializable;
 
@@ -7,6 +7,7 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 2335537313541679887L;
+	
 	private String id;
 	private String pw;
 	

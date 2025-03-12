@@ -1,9 +1,9 @@
-package main;
+package omok.main;
 
 import java.net.Socket;
 import java.util.Scanner;
 
-import service.Client;
+import omok.service.Client;
 
 public class ClientMain {
 

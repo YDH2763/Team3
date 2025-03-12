@@ -1,4 +1,4 @@
-package mode.vo;
+package omok.mode.vo;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
-import service.OmokProgram;
+import omok.service.OmokProgram;
 
 @Data
 public class Room {

@@ -1,4 +1,4 @@
-package mode.vo;
+package omok.mode.vo;
 
 import java.io.Serializable;
 

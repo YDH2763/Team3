@@ -1,11 +1,11 @@
-package service;
+package omok.service;
 
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import mode.vo.Field;
-import mode.vo.Stone;
+import omok.mode.vo.Field;
+import omok.mode.vo.Stone;
 
 public class OmokProgram {
 

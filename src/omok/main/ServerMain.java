@@ -1,9 +1,9 @@
-package main;
+package omok.main;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import service.Server;
+import omok.service.Server;
 
 public class ServerMain {
 

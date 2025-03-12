@@ -2,21 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.UserDAO">
+<mapper namespace="omok.dao.UserDAO">
 
-	<resultMap type ="" id="UserMap">
+	<resultMap type ="omok.mode.vo.User" id="UserMap">
   		<id property="id" column="u_name"/>
 		<result property="pw" column="u_pw"/>
   	</resultMap>
 	
 	<insert id="insertUser">
-		INSERT INTO USER(U_NAME, U_PW) VALUES
-			(#{USER.ID}, #{USER.PW})
+		insert into user(u_name, u_pw) values
+			(#{user.id}, #{user.pw})
 	</insert>
 	
-	<select id="selectUser">
-		SELECT *
-		FROM USER
-		WHERE U_NAME = #{USER.ID} AND U_PW = #{USER.PW}
+	<select id="selectUser" resultMap="UserMap">
+		select *
+		from user
+		where u_name = #{user.id} and u_pw = #{user.pw}
 	</select>
 </mapper>

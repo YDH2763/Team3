@@ -1,4 +1,4 @@
-package service;
+package omok.service;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import mode.vo.Chat;
+import omok.mode.vo.Chat;
 
 /*
  * Client 클래스를 이용하여
