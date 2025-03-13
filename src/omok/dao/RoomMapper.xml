@@ -2,5 +2,39 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="RoomDAO">
+  <mapper namespace="omok.dao.RoomDAO">
+  
+  	<resultMap type ="omok.mode.vo.Room" id="RoomMap">
+  		<id property="id" column="ro_id"/>
+		<result property="roomNum" column="ro_num"/>
+		<result property="bName" column="ro_b_u_name"/>
+		<result property="wName" column="ro_w_u_name"/>
+		
+		<association property="user" javaType="omok.mode.vo.User">
+	  		<id property="id" column="u_name"/>
+			<result property="pw" column="u_pw"/>
+	  	</association>
+  	
+  	</resultMap>
+  	
+  	<select id="selectRoomList" resultType="omok.mode.vo.Room">
+  		select * from room
+  	</select>
+  	
+  	<select id="selectRoom" resultType="omok.mode.vo.Room">
+  		select * from room
+  		where ro_num = #{room.roomNum} 
+  	</select>
+  	
+  	<insert id="insertRoom">
+  		insert into room(ro_num, ro_b_u_name, ro_w_u_name) values
+  		(#{room.roomNum}, #{room.bName}, #{room.wName})
+  	</insert>
+  	
+  	<update id="updateRoom">
+  	update room
+  	set
+  		ro_w_u_name = #{tmp.wName}
+  	where ro_num = #{room.roomNum}
+  	</update>
   </mapper>

@@ -32,6 +32,9 @@ public class Room {
       oisList.add(ois);
    }
    
+   
+   
+   
    public void setClient(ObjectOutputStream oos, ObjectInputStream ois) {
       oosList.add(oos);
       oisList.add(ois);
@@ -106,5 +109,8 @@ public class Room {
       return "[" + roomNum + "번 방, 인원 " + oosList.size() + "명]";
    }
 
+   public String toString2() {
+	      return "방번호 : "+roomNum +", 방장 : " + bName +", 유저 : " + wName;
+   }
    
 }

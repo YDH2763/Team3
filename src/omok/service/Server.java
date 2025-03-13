@@ -30,6 +30,8 @@ public class Server {
    private final static String EXIT = "q";
    private UserDAO userDao;
    
+   private RoomService roomService = new RoomServiceImp();
+   
    public Server(Socket s) {
       this.s = s;
       String resource = "omok/config/mybatis-config.xml";
@@ -190,12 +192,19 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
 
    private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
       System.out.println("[들어갈 방 번호 입력 대기 중]"); 
+      
+      List<Room> roomAll = roomService.getRoomList();
+      for(Room std : roomAll) {
+			System.out.println("방번호 : "+std.toString2());
+		}
+      
       try {
          while(true) {
             int roomNum = ois.readInt();
             String id = ois.readUTF();
             System.out.println("[" + oos + " 입장방 번호 " + roomNum + " 입력 받음]");
-            Room tmp = new Room(roomNum, " ", id, oos, ois);
+            Room tmp = new Room(roomNum, null, id, oos, ois);
+                  
             if(roomList.isEmpty() || !roomList.contains(tmp)) {
                oos.writeBoolean(false);
                send(oos, "[존재하지 않는 방입니다]");
@@ -209,9 +218,11 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
                         client.writeBoolean(true);
                         if(client == oos) {
                            send(client, "[" + roomNum + "번 방에 입장하였습니다]");
+                           roomService.updateRoom(room,tmp);
                         } else {
                            send(client, "[상대가 입장하였습니다]");
                         }
+                        
                         send(client, "[게임이 시작됩니다]");
                      }
                      System.out.println(roomList);
@@ -235,8 +246,12 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
             int roomNum = ois.readInt();
             String id = ois.readUTF();
             System.out.println("[" + oos + " 생성방 번호 " + roomNum + " 입력 받음]");
-            room = new Room(roomNum, id, " ", oos, ois);
-            boolean exist = roomList.contains(room);
+            room = new Room(roomNum, id, null, oos, ois);
+            //room1 =
+            //룸이 있는지 없는지 확인 => 룸리스트(dbx) => db를 통해서 있는지 없는지 확인 
+            boolean exist = roomService.contains(room);
+            //boolean exist = roomList.contains(room);
+            
             if(exist) {
                oos.writeBoolean(false);
                send(oos, "[이미 존재하는 방입니다]");
@@ -244,9 +259,13 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
             else {
                oos.writeBoolean(true);
                roomList.add(room);
+               roomService.insertRoom(room);
+               System.out.println(room.toString2());
                System.out.println(roomList);
                send(oos, "[상대를 기다리는 중입니다]");
-               if(ois.readBoolean()) {
+               if(ois.readBoolean()
+            		   
+            		   ) {
                   /*
                    * 오목게임 진행
                    */

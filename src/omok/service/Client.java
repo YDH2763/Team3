@@ -249,6 +249,7 @@ public class Client{
 					continue;
 				}
 				oos.writeInt(roomNum);	
+				oos.writeUTF(id);
 				oos.flush();
 				boolean success = ois.readBoolean();
 				if(success) {

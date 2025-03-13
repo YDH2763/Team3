@@ -1,6 +1,7 @@
 package omok.dao;
 
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -14,9 +15,11 @@ public interface RoomDAO {
 
 	Room selectRoom(@Param("room")Room room);
 
-	
+	boolean insertRoom(@Param("room")Room room);
 
-	boolean insertRoom(@Param("room")int roomNum, @Param("room")ObjectOutputStream player1, @Param("room")ObjectOutputStream player2);
+	boolean updateRoom(@Param("room")Room room, @Param("room")Room tmp);
+
+	List<Room> selectRoomList();
 
 	
 	

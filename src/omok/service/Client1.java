@@ -18,7 +18,7 @@ import omok.mode.vo.Chat;
 public class Client1{
 
 	private Socket s;
-	private String id;
+	private String id="정순형";
 	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
@@ -242,6 +242,7 @@ public class Client1{
 				int roomNum;
 				try{
 					roomNum = sc.nextInt();
+					
 					sc.nextLine();
 				} catch(InputMismatchException e) {
 					System.out.println("[입력이 올바르지 않습니다]");
@@ -249,6 +250,7 @@ public class Client1{
 					continue;
 				}
 				oos.writeInt(roomNum);	
+				oos.writeUTF(id);
 				oos.flush();
 				boolean success = ois.readBoolean();
 				if(success) {

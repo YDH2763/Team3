@@ -152,21 +152,21 @@ public class Client2{
 	}
 
 	private void enterRoom(ObjectOutputStream oos, ObjectInputStream ois) {
-		// TODO Auto-generated method stub
+		
 		try {
 			while(true) {
 				System.out.print("입장할 방의 번호를 입력하세요: ");
 				int roomNum;
 				try{
 					roomNum = sc.nextInt();
-					oos.writeUTF(id);
 					sc.nextLine();
 				} catch(InputMismatchException e) {
 					System.out.println("[입력이 올바르지 않습니다]");
 					sc.nextLine();
 					continue;
 				}
-				oos.writeInt(roomNum);	
+				oos.writeInt(roomNum);
+				oos.writeUTF(id);
 				oos.flush();
 				
 				if(ois.readBoolean()) {
@@ -243,7 +243,6 @@ public class Client2{
 				int roomNum;
 				try{
 					roomNum = sc.nextInt();
-					oos.writeUTF(id);
 					sc.nextLine();
 				} catch(InputMismatchException e) {
 					System.out.println("[입력이 올바르지 않습니다]");
@@ -251,6 +250,7 @@ public class Client2{
 					continue;
 				}
 				oos.writeInt(roomNum);	
+				oos.writeUTF(id);
 				oos.flush();
 				boolean success = ois.readBoolean();
 				if(success) {
