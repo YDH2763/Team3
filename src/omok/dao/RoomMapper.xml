@@ -10,18 +10,18 @@
 		<result property="bName" column="ro_b_u_name"/>
 		<result property="wName" column="ro_w_u_name"/>
 		
-		<association property="user" javaType="omok.mode.vo.User">
-	  		<id property="id" column="u_name"/>
-			<result property="pw" column="u_pw"/>
-	  	</association>
-  	
   	</resultMap>
   	
-  	<select id="selectRoomList" resultType="omok.mode.vo.Room">
-  		select * from room
+  	<resultMap type ="omok.mode.vo.User" id="UserMap">
+  		<id property="id" column="u_name"/>
+		<result property="pw" column="u_pw"/>
+  	</resultMap>
+  	
+  	<select id="selectRoomList" resultMap="RoomMap">
+  		select ro_num, ro_b_u_name, ro_w_u_name from room
   	</select>
   	
-  	<select id="selectRoom" resultType="omok.mode.vo.Room">
+  	<select id="selectRoom" resultMap="RoomMap">
   		select * from room
   		where ro_num = #{room.roomNum} 
   	</select>

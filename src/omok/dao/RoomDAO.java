@@ -1,6 +1,5 @@
 package omok.dao;
 
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +16,7 @@ public interface RoomDAO {
 
 	boolean insertRoom(@Param("room")Room room);
 
-	boolean updateRoom(@Param("room")Room room, @Param("room")Room tmp);
+	boolean updateRoom(@Param("room")Room room, @Param("tmp")Room tmp);
 
 	List<Room> selectRoomList();
 

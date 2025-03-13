@@ -32,7 +32,7 @@ public class Room {
       oisList.add(ois);
    }
    
-   
+   public Room(){}
    
    
    public void setClient(ObjectOutputStream oos, ObjectInputStream ois) {

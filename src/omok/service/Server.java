@@ -193,10 +193,11 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
    private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
       System.out.println("[들어갈 방 번호 입력 대기 중]"); 
       
+      //
       List<Room> roomAll = roomService.getRoomList();
-      for(Room std : roomAll) {
-			System.out.println("방번호 : "+std.toString2());
-		}
+      for(Room room1 : roomAll) {
+    	  System.out.println(room1.toString2());
+      }
       
       try {
          while(true) {
