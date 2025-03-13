@@ -227,7 +227,7 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
                         send(client, "[게임이 시작됩니다]");
                      }
                      System.out.println(roomList);
-                     room.gameStart(oos, ois);
+                     room.gameStart(roomNum, oos, ois);
                      return;
                   } else {
                      oos.writeBoolean(false);
@@ -270,7 +270,7 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
                   /*
                    * 오목게임 진행
                    */
-                  room.gameStart(oos, ois);
+                  room.gameStart(roomNum, oos, ois);
                   roomList.remove(room);
                   break;
                } else {

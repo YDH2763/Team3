@@ -7,9 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import omok.mode.vo.Room;
 
 
-
-
-
 public interface RoomDAO {
 
 	Room selectRoom(@Param("room")Room room);
@@ -19,6 +16,11 @@ public interface RoomDAO {
 	boolean updateRoom(@Param("room")Room room, @Param("tmp")Room tmp);
 
 	List<Room> selectRoomList();
+
+	int selectRoomId(int roomNum);
+
+	Room selectRoom1(int roomNum);
+
 
 	
 	

@@ -14,6 +14,11 @@ public interface RoomService {
 
 	List<Room> getRoomList();
 
+	int getRoomId(int roomNum);
+
+	Room getRoomNum(int roomNum);
+
+
 
 
 

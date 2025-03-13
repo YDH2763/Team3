@@ -166,6 +166,7 @@ public class Client1{
 					continue;
 				}
 				oos.writeInt(roomNum);	
+				oos.writeUTF(id);
 				oos.flush();
 				
 				if(ois.readBoolean()) {

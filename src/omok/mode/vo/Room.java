@@ -5,13 +5,24 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import omok.mode.vo.Result;
 import omok.service.OmokProgram;
+import omok.service.ResultService;
+import omok.service.ResultServiceImp;
+import omok.service.RoomService;
+import omok.service.RoomServiceImp;
 
 @Data
+@AllArgsConstructor
 public class Room {
    
+   private int ro_Id;	//ro_id
    private int roomNum;
+   
+   private RoomService roomService = new RoomServiceImp();
+   private ResultService resultService = new ResultServiceImp();
    
    private List<ObjectOutputStream> oosList = new ArrayList<ObjectOutputStream>();
    private List<ObjectInputStream> oisList = new ArrayList<ObjectInputStream>();
@@ -41,9 +52,14 @@ public class Room {
       if(oosList.size() == 2) full = true;
    }
 
-   public void gameStart(ObjectOutputStream oos, ObjectInputStream ois) {
+   public void gameStart(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
       ObjectOutputStream player1 = oosList.get(0);
       ObjectOutputStream player2 = oosList.get(1);
+      
+      //게임 시작할때 방 id를 가져온다.
+      //Room selRoom = roomService.getRoomNum(roomNum);
+      //ro_Id = roomService.getRoomId(roomNum);
+      
       omok = new OmokProgram(player1, player2);
       try {
          //첫 필드는 모두에게 보여준다.
@@ -72,7 +88,12 @@ public class Room {
             }
             
             
-            if(omok.gameOver) break;
+            if(omok.gameOver) {
+            	//Result result=new Result(omok.winner,ro_Id);
+                //resultService.getResult(result);
+                break;
+            }
+            
             
             
             
@@ -88,11 +109,15 @@ public class Room {
          oos.writeUTF("[" + omok.winner + "이 승리하였습니다]");
          oos.flush();
          
+         
+         
       } catch(Exception e){}
    }
    
    
-   @Override
+   
+
+@Override
    public boolean equals(Object obj) {
       if (this == obj)
          return true;

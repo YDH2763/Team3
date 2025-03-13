@@ -165,7 +165,8 @@ public class Client{
 					sc.nextLine();
 					continue;
 				}
-				oos.writeInt(roomNum);	
+				oos.writeInt(roomNum);
+				oos.writeUTF(id);
 				oos.flush();
 				
 				if(ois.readBoolean()) {

@@ -1,7 +1,9 @@
 package omok.dao;
 
+import omok.mode.vo.Result;
+
 public interface ResultDAO {
 
-	boolean insertResult(Object id, String winner);
+	boolean insertResult(Result result);
 	
 }

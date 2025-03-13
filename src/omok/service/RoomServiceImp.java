@@ -68,5 +68,16 @@ public class RoomServiceImp implements RoomService{
 		return roomDao.selectRoomList();
 	}
 
+
+	
+	public int getRoomId(int roomNum) {
+		return roomDao.selectRoomId(roomNum);
+	}
+
+	@Override
+	public Room getRoomNum(int roomNum) {
+		return roomDao.selectRoom1(roomNum);
+	}
+
 	
 }

@@ -26,6 +26,12 @@
   		where ro_num = #{room.roomNum} 
   	</select>
   	
+  	<select id="selectRoomId">
+  		select ro_id
+  		from room
+  		where ro_num = #{roomNum} 
+  	</select>
+  	
   	<insert id="insertRoom">
   		insert into room(ro_num, ro_b_u_name, ro_w_u_name) values
   		(#{room.roomNum}, #{room.bName}, #{room.wName})
@@ -37,4 +43,11 @@
   		ro_w_u_name = #{tmp.wName}
   	where ro_num = #{room.roomNum}
   	</update>
+  	
+  	<select id="selectRoom1">
+  		select *
+  		from room
+  		where ro_num = #{roomNum} 
+  	</select>
+  	
   </mapper>
