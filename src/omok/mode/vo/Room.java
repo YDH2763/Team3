@@ -20,6 +20,7 @@ public class Room {
    
    private int ro_Id;	//ro_id
    private int roomNum;
+   private String re_winner;
    
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
@@ -57,6 +58,7 @@ public class Room {
       ObjectOutputStream player2 = oosList.get(1);
       
       //게임 시작할때 방 id를 가져온다.
+      //List<Room> roomID =roomService.getRoomIdList();
       //Room selRoom = roomService.getRoomNum(roomNum);
       //ro_Id = roomService.getRoomId(roomNum);
       
@@ -89,8 +91,16 @@ public class Room {
             
             
             if(omok.gameOver) {
-            	//Result result=new Result(omok.winner,ro_Id);
-                //resultService.getResult(result);
+            	if(omok.winner=="흑") {
+            		//re_winner="BLACK";
+            		//Result result=new Result(re_winner,ro_Id);
+                    //resultService.getResult(result);
+            	}
+            	else {
+            		//re_winner="WHITE";
+            		//Result result=new Result(re_winner,ro_Id);
+                    //resultService.getResult(result);
+            	}
                 break;
             }
             
@@ -137,5 +147,7 @@ public class Room {
    public String toString2() {
 	      return "방번호 : "+roomNum +", 방장 : " + bName +", 유저 : " + wName;
    }
+   
+   
    
 }

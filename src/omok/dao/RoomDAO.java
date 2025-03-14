@@ -21,6 +21,8 @@ public interface RoomDAO {
 
 	Room selectRoom1(int roomNum);
 
+	Room selectRoomNum(int roomNum);
+
 
 	
 	

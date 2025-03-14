@@ -22,8 +22,8 @@
   	</select>
   	
   	<select id="selectRoom" resultMap="RoomMap">
-  		select * from room
-  		where ro_num = #{room.roomNum} 
+  		select ro_num, ro_b_u_name, ro_w_u_name from room
+  		where ro_num = #{room.roomNum}  
   	</select>
   	
   	<select id="selectRoomId">
@@ -43,6 +43,11 @@
   		ro_w_u_name = #{tmp.wName}
   	where ro_num = #{room.roomNum}
   	</update>
+  	
+  	<select id="selectRoomNum">
+  		select ro_num form room
+  		where ro_num=#{roomNum}
+  	</select>
   	
   	<select id="selectRoom1">
   		select *

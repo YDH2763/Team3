@@ -34,7 +34,7 @@ public class RoomServiceImp implements RoomService{
 	public boolean contains(Room room) {
 		Room dbroom = roomDao.selectRoom(room);
 			
-		if(dbroom!=null) {
+		if(dbroom != null) {
 			return true;
 		}
 		return false;
@@ -71,6 +71,9 @@ public class RoomServiceImp implements RoomService{
 
 	
 	public int getRoomId(int roomNum) {
+		Room dbroom = roomDao.selectRoomNum(roomNum);
+		
+		
 		return roomDao.selectRoomId(roomNum);
 	}
 

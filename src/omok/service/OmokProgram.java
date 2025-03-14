@@ -65,13 +65,13 @@ public class OmokProgram {
                
                //흑 승리 시 게임 종료
                if(winCheck(blackList, 5)) {
-                  winner = "BLACK";
+                  winner = "흑";
                   gameOver = true;
                }
                
                //백 승리 시 게임 종료
                if(winCheck(whiteList, 5)) {
-                  winner = "WHITE";
+                  winner = "백";
                   gameOver = true;
                }
                
