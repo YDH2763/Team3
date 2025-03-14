@@ -55,7 +55,7 @@ public class OmokProgram {
                   }
                } else {
                   whiteList.add(tmp);
-               }
+               } 
                //필드에 업데이트
                field.setStone(x, y);
                

@@ -250,7 +250,7 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
                    */
                   room.gameStart(oos, ois);
                   roomList.remove(room);
-                  break;
+                  break;   
                } else {
                   send(oos, "[대기를 중단합니다]");
                   roomList.remove(room);
