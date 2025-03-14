@@ -1,10 +1,12 @@
 package omok.service;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +45,8 @@ public class Server {
     	  session = sessionFactory.openSession(true);
     	  userDao = session.getMapper(UserDAO.class);
       } catch (IOException e) {
+    	  System.out.println("[클라이언트 접속 종료]");
+      } catch (Exception e) {
     	  e.printStackTrace();
       }
    }
@@ -72,7 +76,7 @@ public class Server {
             System.out.println("대기실 인원: " + chatList.size());
             System.out.println("[연결 끊김]");
          } catch (Exception e) {
-            System.out.println("로그인 메뉴 수신 중 예기치 못한 오류 발생");
+            System.out.println("[로그인 메뉴 수신 중 예기치 못한 오류 발생]");
             e.printStackTrace();
          }
       });
@@ -94,8 +98,12 @@ public class Server {
                System.out.println("[" + oos + "메인 메뉴 " + mainMenu + " 입력 받음]");
                runMenu(mainMenu, oos, ois);
             }
-         } catch (Exception e) {
-            System.out.println("메인 메뉴 수신 중 예기치 못한 오류 발생");
+         } catch (SocketException e) {
+             System.out.println("[클라이언트 강제 종료]");
+          } catch (EOFException e) {
+              System.out.println("[클라이언트 강제 종료]");
+           } catch (Exception e) {
+            System.out.println("[메인 메뉴 수신 중 예기치 못한 오류 발생]");
             e.printStackTrace();
          }
          break;
@@ -128,8 +136,11 @@ public class Server {
 			   oos.flush();
 			   return false;
 		   }
-	   } catch (Exception e) {
-		   System.out.println("로그인 수신 중 예기치 못한 오류 발생");
+	   } catch (SocketException e) {
+           System.out.println("[클라이언트 강제 종료]");
+           return false;
+        }catch (Exception e) {
+		   System.out.println("[로그인 수신 중 예기치 못한 오류 발생]");
 		   e.printStackTrace();
 		   return false;
 	   }
@@ -239,11 +250,8 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
    private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
       System.out.println("[들어갈 방 번호 입력 대기 중]"); 
       
-      //
+      
       List<Room> roomAll = roomService.getRoomList();
-      for(Room room1 : roomAll) {
-    	  System.out.println(room1.toString2());
-      }
       
       try {
          while(true) {
@@ -252,27 +260,31 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
             System.out.println("[" + oos + " 입장방 번호 " + roomNum + " 입력 받음]");
             Room tmp = new Room(roomNum, null, id, oos, ois);
                   
-            if(roomList.isEmpty() || !roomList.contains(tmp)) {
-               oos.writeBoolean(false);
-               send(oos, "[존재하지 않는 방입니다]");
-               continue;
+            boolean exist = roomService.contains(tmp);
+            
+            if(!exist) {
+            	oos.writeBoolean(false);
+                send(oos, "[이미 시작되거나 존재하지 않는 방입니다]");
+                continue;
             }
+            
+            
             for (Room room : roomList) {
                if(room.equals(tmp)) {
                   if(!room.isFull()) {
-                     room.setClient(oos, ois);
+                     room.setClient(oos, ois, id);
                      for (ObjectOutputStream client : room.getOosList()) {
                         client.writeBoolean(true);
                         if(client == oos) {
                            send(client, "[" + roomNum + "번 방에 입장하였습니다]");
-                           roomService.updateRoom(room,tmp);
+                           roomService.enteredRoom(room, tmp);
+                           System.out.println(room.toString());
                         } else {
                            send(client, "[상대가 입장하였습니다]");
                         }
                         
                         send(client, "[게임이 시작됩니다]");
                      }
-                     System.out.println(roomList);
                      room.gameStart(roomNum, oos, ois);
                      return;
                   } else {
@@ -287,8 +299,8 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
 
    private void makeRoom(ObjectOutputStream oos, ObjectInputStream ois) {
       System.out.println("[생성할 방 번호 입력 대기 중]");
+      Room room = null;
       try {
-         Room room;
          while(true) {
             int roomNum = ois.readInt();
             String id = ois.readUTF();
@@ -305,29 +317,37 @@ private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
             }
             else {
                oos.writeBoolean(true);
-               roomList.add(room);
-               roomService.insertRoom(room);
-               System.out.println(room.toString2());
-               System.out.println(roomList);
+               roomList.add(room);				//리스트에 추가
+               roomService.insertRoom(room);	//db에 추가
+               System.out.println("개설번호: " + room.getId());
+               System.out.println(room.toString());
                send(oos, "[상대를 기다리는 중입니다]");
-               if(ois.readBoolean()
-            		   
-            		   ) {
+               if(ois.readBoolean()) {
                   /*
                    * 오목게임 진행
                    */
                   room.gameStart(roomNum, oos, ois);
-                  roomList.remove(room);
+                  roomList.remove(room);										//리스트에서 삭제
+                  boolean gameOver = roomService.closeRoom(room.getId());		//DB에서 RO_CLOSED를 Y로 설정
+                  if(gameOver) System.out.println("[게임이 종료되어 방을 폐쇄합니다]");
                   break;   
                } else {
                   send(oos, "[대기를 중단합니다]");
-                  roomList.remove(room);
+                  roomList.remove(room);										//리스트에서 삭제
+                  boolean gameOver = roomService.closeRoom(room.getId());		//DB에서 RO_CLOSED를 Y로 설정
+                  if(gameOver) System.out.println("[대기를 중단하여 방을 폐쇄합니다]");
                   break;
                }
             }
          }
          
-      } catch (IOException e) {}
+      } catch (IOException e) {
+    	  if(room != null) {
+    		  roomList.remove(room);										//리스트에서 삭제
+    		  boolean gameOver = roomService.closeRoom(room.getId());		//DB에서 RO_CLOSED를 Y로 설정
+    		  if(gameOver) System.out.println("[클라이언트와 연결이 끊겨 방을 폐쇄합니다]");    		  
+    	  }
+      }
    }
 
    private void chat(ObjectOutputStream oos, ObjectInputStream ois) {

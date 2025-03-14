@@ -10,13 +10,16 @@ public interface RoomService {
 
 	boolean insertRoom(Room room);
 
-	boolean updateRoom(Room room, Room tmp);
+	boolean enteredRoom(Room room, Room tmp);
+	
+	boolean closeRoom(int roomId);
 
 	List<Room> getRoomList();
 
 	int getRoomId(int roomNum);
 
 	Room getRoomNum(int roomNum);
+
 
 
 

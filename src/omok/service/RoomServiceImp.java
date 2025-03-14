@@ -31,6 +31,29 @@ public class RoomServiceImp implements RoomService{
 	}
 
 	@Override
+	public boolean insertRoom(Room room) {
+		
+		if(room == null || contains(room)) {
+			return false;
+		}
+		return roomDao.insertRoom(room);
+	}
+
+	@Override
+	public boolean enteredRoom(Room room, Room tmp) {
+		if(room == null || tmp == null) {
+			return false;
+		}
+		
+		return roomDao.enteredRoom(room, tmp);
+	}
+
+	@Override
+	public boolean closeRoom(int roomId) {
+		return roomDao.closeRoom(roomId);
+	}
+
+	@Override
 	public boolean contains(Room room) {
 		Room dbroom = roomDao.selectRoom(room);
 			
@@ -38,29 +61,6 @@ public class RoomServiceImp implements RoomService{
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public boolean insertRoom(Room room) {
-		
-		if(room == null) {
-			return false;
-		}
-		
-		if(contains(room)) {
-			return false;
-		}
-		System.out.println(room);
-		return roomDao.insertRoom(room);
-	}
-
-	@Override
-	public boolean updateRoom(Room room, Room tmp) {
-		if(room == null || tmp == null) {
-			return false;
-		}
-		
-		return roomDao.updateRoom(room, tmp);
 	}
 
 	@Override

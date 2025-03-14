@@ -18,7 +18,7 @@ import omok.service.RoomServiceImp;
 @AllArgsConstructor
 public class Room {
    
-   private int ro_Id;	//ro_id
+   private int id;
    private int roomNum;
    private String re_winner;
    
@@ -47,9 +47,10 @@ public class Room {
    public Room(){}
    
    
-   public void setClient(ObjectOutputStream oos, ObjectInputStream ois) {
+   public void setClient(ObjectOutputStream oos, ObjectInputStream ois, String id) {
       oosList.add(oos);
       oisList.add(ois);
+      wName = id;
       if(oosList.size() == 2) full = true;
    }
 
@@ -141,10 +142,6 @@ public class Room {
 
    @Override
    public String toString() {
-      return "[" + roomNum + "번 방, 인원 " + oosList.size() + "명]";
-   }
-
-   public String toString2() {
 	      return "방번호 : "+roomNum +", 방장 : " + bName +", 유저 : " + wName;
    }
    

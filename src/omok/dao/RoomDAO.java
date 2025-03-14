@@ -13,7 +13,9 @@ public interface RoomDAO {
 
 	boolean insertRoom(@Param("room")Room room);
 
-	boolean updateRoom(@Param("room")Room room, @Param("tmp")Room tmp);
+	boolean enteredRoom(@Param("room")Room room, @Param("tmp")Room tmp);
+
+	boolean closeRoom(@Param("roomId")int roomId);
 
 	List<Room> selectRoomList();
 
@@ -22,10 +24,5 @@ public interface RoomDAO {
 	Room selectRoom1(int roomNum);
 
 	Room selectRoomNum(int roomNum);
-
-
-	
-	
-
 }
     
