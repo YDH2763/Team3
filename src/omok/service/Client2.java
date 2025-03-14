@@ -15,15 +15,15 @@ import omok.mode.vo.Chat;
  * 서버와 클라이언트가 문자열을 주고받는 예제
  */
 
-public class Client{
+public class Client2{
 
 	private Socket s;
-	private String id="김가람";
+	private String id="박소은";
 	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
-	public Client(Socket s) {
+	public Client2(Socket s) {
 		this.s = s;
 	}
 
@@ -60,7 +60,8 @@ public class Client{
 	private void runLoginMenu(int menu, ObjectInputStream ois, ObjectOutputStream oos) {
 		switch (menu) {
 		case 1:
-			if(!logIn(oos, ois)) break;
+			logIn(oos, ois);
+			System.out.println("로그인을 진행했습니다");
 			try {
 				int mainMenu = 0;
 				do {
@@ -88,13 +89,14 @@ public class Client{
 			break;
 		case 2:
 			signIn(oos, ois);
+			System.out.println("회원가입을 진행했습니다");
 			break;
 		default:
 			break;
 		}
 	}
 
-	private boolean logIn(ObjectOutputStream oos, ObjectInputStream ois) {
+	private void logIn(ObjectOutputStream oos, ObjectInputStream ois) {
 		try {
 			System.out.print("닉네임 : ");
 			id = sc.nextLine();
@@ -104,20 +106,8 @@ public class Client{
 			pw = sc.nextLine();
 			oos.writeUTF(pw);
 			oos.flush();
-			
-			boolean success = ois.readBoolean();
-			
-			if(success) {
-				System.out.println("\n***** " + id + "님 환영합니다. *****\n");
-				return true;
-			}
-			else {
-				System.out.println("아이디 또는 비밀번호를 확인하세요.");
-				return false;
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 
@@ -127,18 +117,12 @@ public class Client{
 			id = sc.nextLine();
 			oos.writeUTF(id);
 			oos.flush();
-			
-			boolean success = ois.readBoolean();
-			if(!success) {
-				System.out.println("이미 등록된 닉네임입니다.");
-				return;
-			}
 			System.out.print("비밀번호 : ");
 			pw = sc.nextLine();
 			oos.writeUTF(pw);
 			oos.flush();
 			
-			success = ois.readBoolean();
+			boolean success = ois.readBoolean();
 			
 			if(success) System.out.println("회원가입 되었습니다.");
 			else System.out.println("이미 등록된 회원입니다.");
@@ -168,7 +152,7 @@ public class Client{
 	}
 
 	private void enterRoom(ObjectOutputStream oos, ObjectInputStream ois) {
-		// TODO Auto-generated method stub
+		
 		try {
 			while(true) {
 				System.out.print("입장할 방의 번호를 입력하세요: ");

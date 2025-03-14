@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import omok.mode.vo.Field;
 import omok.mode.vo.Stone;
 
@@ -11,6 +12,9 @@ public class OmokProgram {
 
    private ObjectOutputStream oos1;
    private ObjectOutputStream oos2;
+   
+  
+  
    
    private List<Stone> blackList = new ArrayList<Stone>();
    private List<Stone> whiteList = new ArrayList<Stone>();

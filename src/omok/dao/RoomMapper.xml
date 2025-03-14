@@ -2,5 +2,57 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="RoomDAO">
+  <mapper namespace="omok.dao.RoomDAO">
+  
+  	<resultMap type ="omok.mode.vo.Room" id="RoomMap">
+  		<id property="id" column="ro_id"/>
+		<result property="roomNum" column="ro_num"/>
+		<result property="bName" column="ro_b_u_name"/>
+		<result property="wName" column="ro_w_u_name"/>
+		
+  	</resultMap>
+  	
+  	<resultMap type ="omok.mode.vo.User" id="UserMap">
+  		<id property="id" column="u_name"/>
+		<result property="pw" column="u_pw"/>
+  	</resultMap>
+  	
+  	<select id="selectRoomList" resultMap="RoomMap">
+  		select ro_num, ro_b_u_name, ro_w_u_name from room
+  	</select>
+  	
+  	<select id="selectRoom" resultMap="RoomMap">
+  		select ro_num, ro_b_u_name, ro_w_u_name from room
+  		where ro_num = #{room.roomNum}  
+  	</select>
+  	
+  	<select id="selectRoomId">
+  		select ro_id
+  		from room
+  		where ro_num = #{roomNum} 
+  	</select>
+  	
+  	<insert id="insertRoom">
+  		insert into room(ro_num, ro_b_u_name, ro_w_u_name) values
+  		(#{room.roomNum}, #{room.bName}, #{room.wName})
+  	</insert>
+  	
+  	<update id="updateRoom">
+  	update room
+  	set
+  		ro_w_u_name = #{tmp.wName}
+  	where ro_num = #{room.roomNum}
+  	</update>
+  	
+  	<select id="selectRoomNum">
+  		select ro_num form room
+  		where ro_num=#{roomNum}
+  	</select>
+  	
+  	<select id="selectRoom1">
+  		select *
+  		from room
+  		where ro_num = #{roomNum} 
+  	</select>
+  	
   </mapper>

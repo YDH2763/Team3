@@ -5,13 +5,25 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import omok.mode.vo.Result;
 import omok.service.OmokProgram;
+import omok.service.ResultService;
+import omok.service.ResultServiceImp;
+import omok.service.RoomService;
+import omok.service.RoomServiceImp;
 
 @Data
+@AllArgsConstructor
 public class Room {
    
+   private int ro_Id;	//ro_id
    private int roomNum;
+   private String re_winner;
+   
+   private RoomService roomService = new RoomServiceImp();
+   private ResultService resultService = new ResultServiceImp();
    
    private List<ObjectOutputStream> oosList = new ArrayList<ObjectOutputStream>();
    private List<ObjectInputStream> oisList = new ArrayList<ObjectInputStream>();
@@ -19,14 +31,21 @@ public class Room {
    private boolean full = false;
    private boolean allOut = false;
    
+   private String bName;
+   private String wName;
    
    private OmokProgram omok;
    
-   public Room(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
+   public Room(int roomNum, String bName, String wName, ObjectOutputStream oos, ObjectInputStream ois) {
       this.roomNum = roomNum;
+      this.bName= bName;
+      this.wName= wName;
       oosList.add(oos);
       oisList.add(ois);
    }
+   
+   public Room(){}
+   
    
    public void setClient(ObjectOutputStream oos, ObjectInputStream ois) {
       oosList.add(oos);
@@ -34,9 +53,15 @@ public class Room {
       if(oosList.size() == 2) full = true;
    }
 
-   public void gameStart(ObjectOutputStream oos, ObjectInputStream ois) {
+   public void gameStart(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
       ObjectOutputStream player1 = oosList.get(0);
       ObjectOutputStream player2 = oosList.get(1);
+      
+      //게임 시작할때 방 id를 가져온다.
+      //List<Room> roomID =roomService.getRoomIdList();
+      //Room selRoom = roomService.getRoomNum(roomNum);
+      //ro_Id = roomService.getRoomId(roomNum);
+      
       omok = new OmokProgram(player1, player2);
       try {
          //첫 필드는 모두에게 보여준다.
@@ -65,7 +90,20 @@ public class Room {
             }
             
             
-            if(omok.gameOver) break;
+            if(omok.gameOver) {
+            	if(omok.winner=="흑") {
+            		//re_winner="BLACK";
+            		//Result result=new Result(re_winner,ro_Id);
+                    //resultService.getResult(result);
+            	}
+            	else {
+            		//re_winner="WHITE";
+            		//Result result=new Result(re_winner,ro_Id);
+                    //resultService.getResult(result);
+            	}
+                break;
+            }
+            
             
             
             
@@ -81,11 +119,15 @@ public class Room {
          oos.writeUTF("[" + omok.winner + "이 승리하였습니다]");
          oos.flush();
          
+         
+         
       } catch(Exception e){}
    }
    
    
-   @Override
+   
+
+@Override
    public boolean equals(Object obj) {
       if (this == obj)
          return true;
@@ -102,5 +144,10 @@ public class Room {
       return "[" + roomNum + "번 방, 인원 " + oosList.size() + "명]";
    }
 
+   public String toString2() {
+	      return "방번호 : "+roomNum +", 방장 : " + bName +", 유저 : " + wName;
+   }
+   
+   
    
 }
