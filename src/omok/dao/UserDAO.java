@@ -7,7 +7,8 @@ import omok.mode.vo.User;
 public interface UserDAO {
 
 	User selectUser(@Param("user")User user);
+	
+	String checkId(@Param("user")User user);
 
 	boolean insertUser(@Param("user")User user);
-
 }
