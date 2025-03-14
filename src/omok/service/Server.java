@@ -115,7 +115,7 @@ public class Server {
 		   pw = ois.readUTF();
 		   System.out.println("비밀번호 "  + pw + " 수신");
 		   
-		   User user = new User(id, pw);
+		   User user = new User(id, pw, "");
 		   
 		   if(contains(user)) {
 			   oos.writeBoolean(true);
@@ -140,7 +140,7 @@ public class Server {
 		   id = ois.readUTF();
 		   System.out.println("닉네임 "  + id + " 수신");
 		   
-		   User tmp = new User(id);
+		   User tmp = new User(id, "", "");
 		   
 		   if(!isNewId(tmp)) {
 			   System.out.println("[중복된 닉네임]");
@@ -156,7 +156,7 @@ public class Server {
 		   pw = ois.readUTF();
 		   System.out.println("비밀번호 "  + pw + " 수신");
          
-		   User user = new User(id, pw);
+		   User user = new User(id, pw, "");
 		   //생성된 유저 정보를 등록 요청한 후 성공 여부 받아옴
 		   if(!insertUser(user)) {
 			   System.out.println("[중복된 회원]");
@@ -196,7 +196,7 @@ public class Server {
 
 	private boolean contains(User user) {
 		
-		if(user.getPw() == null) {
+		if(user.getPw() == "") {
 			//중복된 아이디가 있는지 체크함
 			String id = userDao.checkId(user);
 			if(id != null) {

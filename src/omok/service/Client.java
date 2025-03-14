@@ -108,7 +108,7 @@ public class Client{
 			boolean success = ois.readBoolean();
 			
 			if(success) {
-				System.out.println(id + "님 환영합니다.");
+				System.out.println("\n***** " + id + "님 환영합니다. *****\n");
 				return true;
 			}
 			else {
