@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="omok.dao.ResultDAO">
+  	<resultMap type ="omok.mode.vo.Result" id="RoomMap">
+  		<id property="id" column="re_id"/>
+		<result property="winner" column="re_winner"/>
+		<result property="roomId" column="re_ro_id"/>
+		
+  	</resultMap>
+  
+  </mapper>
