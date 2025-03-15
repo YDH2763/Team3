@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import omok.dao.ResultDAO;
-import omok.mode.vo.Result;
 
 public class ResultServiceImp implements ResultService {
 	
@@ -30,16 +29,8 @@ public class ResultServiceImp implements ResultService {
 	}
 
 	@Override
-	public boolean getResult(Result result) {
+	public boolean insertResult(String winner, int id) {
 		
-		if(result == null) {
-			return false;
-		}
-		
-		return resultDao.insertResult(result);
+		return resultDao.insertResult(winner, id);
 	}
-	
-	
-	
-
 }

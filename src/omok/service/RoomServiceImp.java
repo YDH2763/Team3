@@ -33,7 +33,7 @@ public class RoomServiceImp implements RoomService{
 	@Override
 	public boolean insertRoom(Room room) {
 		
-		if(room == null || contains(room)) {
+		if(room == null || containsOpeningRoom(room)) {
 			return false;
 		}
 		return roomDao.insertRoom(room);
@@ -54,33 +54,20 @@ public class RoomServiceImp implements RoomService{
 	}
 
 	@Override
-	public boolean contains(Room room) {
-		Room dbroom = roomDao.selectRoom(room);
+	public boolean containsOpeningRoom(Room room) {
+		Room dbroom = roomDao.selectOpeningRoom(room);
 			
 		if(dbroom != null) {
 			return true;
 		}
 		return false;
 	}
-
-	@Override
-	public List<Room> getRoomList() {
-		return roomDao.selectRoomList();
-	}
-
-
 	
-	public int getRoomId(int roomNum) {
-		Room dbroom = roomDao.selectRoomNum(roomNum);
-		
-		
-		return roomDao.selectRoomId(roomNum);
-	}
-
 	@Override
-	public Room getRoomNum(int roomNum) {
-		return roomDao.selectRoom1(roomNum);
-	}
+	public String getFull(Room room) {
+		return roomDao.getFull(room);
+	};
+
 
 	
 }

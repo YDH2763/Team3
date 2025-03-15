@@ -6,7 +6,7 @@ import omok.mode.vo.Room;
 
 public interface RoomService {
 
-	boolean contains(Room room);
+	boolean containsOpeningRoom(Room room);
 
 	boolean insertRoom(Room room);
 
@@ -14,19 +14,5 @@ public interface RoomService {
 	
 	boolean closeRoom(int roomId);
 
-	List<Room> getRoomList();
-
-	int getRoomId(int roomNum);
-
-	Room getRoomNum(int roomNum);
-
-
-
-
-
-
-	
-
-
-
+	String getFull(Room room);
 }

@@ -17,7 +17,7 @@
 	
 	<select id="selectUser" resultMap="UserMap">
 		select * from user
-		where u_name = #{user.id} and u_pw = #{user.pw}
+		where u_name = #{user.id} and u_pw = #{user.pw} and u_del = "N"
 	</select>
 	
 	<select id="checkId">

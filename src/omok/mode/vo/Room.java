@@ -20,7 +20,7 @@ public class Room {
    
    private int id;
    private int roomNum;
-   private String re_winner;
+   private String winner;
    
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
@@ -44,8 +44,7 @@ public class Room {
       oisList.add(ois);
    }
    
-   public Room(){}
-   
+   public Room() {}
    
    public void setClient(ObjectOutputStream oos, ObjectInputStream ois, String id) {
       oosList.add(oos);
@@ -54,14 +53,9 @@ public class Room {
       if(oosList.size() == 2) full = true;
    }
 
-   public void gameStart(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
+   public String gameStart(int roomNum, ObjectOutputStream oos, ObjectInputStream ois) {
       ObjectOutputStream player1 = oosList.get(0);
       ObjectOutputStream player2 = oosList.get(1);
-      
-      //게임 시작할때 방 id를 가져온다.
-      //List<Room> roomID =roomService.getRoomIdList();
-      //Room selRoom = roomService.getRoomNum(roomNum);
-      //ro_Id = roomService.getRoomId(roomNum);
       
       omok = new OmokProgram(player1, player2);
       try {
@@ -81,7 +75,6 @@ public class Room {
                System.out.println("흑의 턴을 받음");
             }
             
-            
             while(true) {
                int x = ois.readInt();
                int y = ois.readInt();
@@ -90,23 +83,7 @@ public class Room {
                if(ternEnd) break;
             }
             
-            
-            if(omok.gameOver) {
-            	if(omok.winner=="흑") {
-            		//re_winner="BLACK";
-            		//Result result=new Result(re_winner,ro_Id);
-                    //resultService.getResult(result);
-            	}
-            	else {
-            		//re_winner="WHITE";
-            		//Result result=new Result(re_winner,ro_Id);
-                    //resultService.getResult(result);
-            	}
-                break;
-            }
-            
-            
-            
+            if(omok.gameOver) break;
             
             if(oos == player1) {
                oos.writeUTF("[백의 턴이 진행중입니다]");
@@ -120,9 +97,14 @@ public class Room {
          oos.writeUTF("[" + omok.winner + "이 승리하였습니다]");
          oos.flush();
          
+         if(omok.winner.equals("흑")) return "BLACK";
+         else if(omok.winner.equals("백")) return "WHITE";
+         else return "DRAW";
          
          
-      } catch(Exception e){}
+      } catch(Exception e){
+    	  return "";
+      }
    }
    
    

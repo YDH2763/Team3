@@ -1,9 +1,9 @@
 package omok.dao;
 
-import omok.mode.vo.Result;
+import org.apache.ibatis.annotations.Param;
 
 public interface ResultDAO {
-
-	boolean insertResult(Result result);
+	
+	boolean insertResult(@Param("winner")String winner, @Param("roomId")int id);
 	
 }

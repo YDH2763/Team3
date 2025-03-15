@@ -305,36 +305,36 @@ public class Client{
 								}
 								oos.writeInt(x);
 								oos.writeInt(y);
-								oos.flush();
-								boolean ternEnd = ois.readBoolean();
-								if(ternEnd) {
+								oos.flush();							//입력 좌표를 서버로 전송
+								boolean ternEnd = ois.readBoolean();	//금수 여부 수령
+								if(ternEnd) {							//가능한 수일 시
 									oos.writeBoolean(ternEnd);
-									oos.flush();
-									break;
+									oos.flush();						//턴 종료 true 전송
+									break;								//좌표 입력 종료
 								}
-								else {
+								else {									//금수일 시
 									oos.writeBoolean(ternEnd);
-									oos.flush();
-									String reInput = ois.readUTF();
-									System.out.println(reInput);
+									oos.flush();						//턴 종료 false 전송
+									String reInput = ois.readUTF();		//금수 메세지 수령
+									System.out.println(reInput);		//금수 메세지 출력
 								}
 							}
 							
-							String myField = ois.readUTF();
-							System.out.println(myField);
-							myWin = ois.readBoolean();
-							if(myWin) break;
-							String whiteTurn = ois.readUTF();
-							System.out.println(whiteTurn);
-							String whitestone = ois.readUTF();
-							System.out.println(whitestone);
-							whiteWin = ois.readBoolean();
+							String myField = ois.readUTF();				//착수가 업데이트 된 필드 수령
+							System.out.println(myField);				//필드 출력
+							myWin = ois.readBoolean();					//승리 여부 수령
+							if(myWin) break;							//승리 시 종료
+							String whiteTurn = ois.readUTF();			//상대 턴 시작 메세지 수령
+							System.out.println(whiteTurn);				//메세지 출력
+							String whitestone = ois.readUTF();			//상대 착수 완료 메세지 수령
+							System.out.println(whitestone);				//메세지 출력
+							whiteWin = ois.readBoolean();				//상대 승리 여부 수령
 							oos.writeBoolean(whiteWin);
-							oos.flush();
-							if(whiteWin) break;
+							oos.flush();								//상대 승리 여부 서버로 전송
+							if(whiteWin) break;							//상대 승리 시 종료
 						}
-						String gameOver = ois.readUTF();
-						System.out.println(gameOver);
+						String gameOver = ois.readUTF();				//게임 종료 메세지 수령
+						System.out.println(gameOver);					//메세지 출력
 						
 					}
 					break;

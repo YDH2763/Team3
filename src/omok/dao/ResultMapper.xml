@@ -7,7 +7,10 @@
   		<id property="id" column="re_id"/>
 		<result property="winner" column="re_winner"/>
 		<result property="roomId" column="re_ro_id"/>
-		
   	</resultMap>
   
+	<insert id="insertResult">
+  		insert into result(re_winner, re_ro_id) values
+  		(#{winner}, #{roomId})
+  	</insert>
   </mapper>

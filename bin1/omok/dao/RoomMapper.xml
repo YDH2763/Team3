@@ -11,13 +11,14 @@
 		<result property="wName" column="ro_w_u_name"/>
   	</resultMap>
   	
-  	<select id="selectRoomList" resultMap="RoomMap">
+  	<select id="selectOpeningRoom" resultMap="RoomMap">
   		select ro_num, ro_b_u_name, ro_w_u_name
   		from room
+  		where ro_num = #{room.roomNum} and ro_closed = "N"
   	</select>
   	
-  	<select id="selectRoom" resultMap="RoomMap">
-  		select ro_num, ro_b_u_name, ro_w_u_name
+  	<select id="getFull">
+  		select ro_full
   		from room
   		where ro_num = #{room.roomNum} and ro_closed = "N"
   	</select>
