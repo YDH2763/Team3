@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import omok.dao.GiboDAO;
+import omok.mode.vo.Gibo;
 
 public class GiboServiceImp implements GiboService{
 	private GiboDAO giboDao;
@@ -27,6 +28,12 @@ public class GiboServiceImp implements GiboService{
 	      }
 	      
 	      
+	}
+
+	
+	public Gibo insertGibo(Gibo gibo) {
+		
+		return giboDao.insertGibo(gibo);
 	}
 
 }

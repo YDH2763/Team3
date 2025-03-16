@@ -7,7 +7,10 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import omok.mode.vo.Gibo;
 import omok.mode.vo.Result;
+import omok.service.GiboService;
+import omok.service.GiboServiceImp;
 import omok.service.OmokProgram;
 import omok.service.ResultService;
 import omok.service.ResultServiceImp;
@@ -23,8 +26,10 @@ public class Room {
    private String winner;
    private int count=0;
    
+   
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
+   private GiboService giboService = new GiboServiceImp();
    
    private List<ObjectOutputStream> oosList = new ArrayList<ObjectOutputStream>();
    private List<ObjectInputStream> oisList = new ArrayList<ObjectInputStream>();

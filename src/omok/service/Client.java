@@ -17,7 +17,7 @@ import omok.mode.vo.Chat;
 public class Client{
 
 	private Socket s;
-	private String id="김가람";
+	private String id;
 	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
