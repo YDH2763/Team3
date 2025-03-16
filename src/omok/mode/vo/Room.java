@@ -21,6 +21,7 @@ public class Room {
    private int id;
    private int roomNum;
    private String winner;
+   private int count=0;
    
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
@@ -80,10 +81,17 @@ public class Room {
                int y = ois.readInt();
                omok.input(oos, x, y);
                boolean ternEnd = ois.readBoolean();
-               if(ternEnd) break;
+               if(ternEnd) {
+            	   count++;
+            	   Gibo gibo=new Gibo(count,x,y,id);
+            	   System.out.println(gibo.toString());
+            	   break;
+               }
             }
             
-            if(omok.gameOver) break;
+            if(omok.gameOver) {
+            	break;
+            }
             
             if(oos == player1) {
                oos.writeUTF("[백의 턴이 진행중입니다]");
@@ -95,6 +103,8 @@ public class Room {
             }
          }
          oos.writeUTF("[" + omok.winner + "이 승리하였습니다]");
+         count = 0;
+         System.out.println(count);
          oos.flush();
          
          if(omok.winner.equals("흑")) return "BLACK";

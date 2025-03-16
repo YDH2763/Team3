@@ -10,7 +10,7 @@
         <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/omok"/>
         <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="password" value="y97d11h28cau!"/>
       </dataSource>
     </environment>
   </environments>
@@ -18,7 +18,7 @@
     <mapper resource="omok/dao/UserMapper.xml"/>
     <mapper resource="omok/dao/ResultMapper.xml"/>
     <mapper resource="omok/dao/RoomMapper.xml"/>
-    <mapper resource="omok/dao/StoneMapper.xml"/>
+    <mapper resource="omok/dao/GiboMapper.xml"/>
     <mapper resource="omok/dao/ScoreMapper.xml"/>
   </mappers>
 </configuration>
