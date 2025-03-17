@@ -81,7 +81,7 @@ public class Client{
 					
 					runMenu(mainMenu, ois, oos);
 					
-				}while(mainMenu != 4);
+				}while(mainMenu != 5);
 				
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -160,6 +160,27 @@ public class Client{
 			enterRoom(oos, ois);
 			break;
 		case 4:
+			try {
+				int resultMenu = 0;
+				do {
+					printResultMenu();
+					try{
+						resultMenu = sc.nextInt();
+						sc.nextLine();
+					} catch(InputMismatchException e) {
+						System.out.println("[입력이 올바르지 않습니다]");
+						sc.nextLine();
+						continue;
+					}
+					runResultMenu(resultMenu, ois, oos);
+					
+				}while(resultMenu != 3);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case 5:
 			
 			break;
 
@@ -168,89 +189,17 @@ public class Client{
 		}
 	}
 
-	private void enterRoom(ObjectOutputStream oos, ObjectInputStream ois) {
-		// TODO Auto-generated method stub
-		try {
-			while(true) {
-				System.out.print("입장할 방의 번호를 입력하세요: ");
-				int roomNum;
-				try{
-					roomNum = sc.nextInt();
-					sc.nextLine();
-				} catch(InputMismatchException e) {
-					System.out.println("[입력이 올바르지 않습니다]");
-					sc.nextLine();
-					continue;
-				}
-				oos.writeInt(roomNum);
-				oos.writeUTF(id);
-				oos.flush();
-				
-				if(ois.readBoolean()) {
-					//입장 공지 수령
-					System.out.println(ois.readUTF());
-					//시작 공지 수령
-					System.out.println(ois.readUTF());
-					//첫 필드 수령
-					System.out.println(ois.readUTF());
-					boolean blackWin;
-					boolean myWin;
-					while(true) {
-						String blackTurn = ois.readUTF();
-						System.out.println(blackTurn);
-						String blackstone = ois.readUTF();
-						System.out.println(blackstone);
-						blackWin = ois.readBoolean();
-						oos.writeBoolean(blackWin);
-						oos.flush();
-						if(blackWin) break;
-						
-						while(true) {
-							System.out.print("좌표 입력:");
-							int x = 0, y = 0;
-							try {
-								x = sc.nextInt();
-								y = sc.nextInt();
-								sc.nextLine();
-							} catch(InputMismatchException e) {
-								System.out.println("[입력이 올바르지 않습니다]");
-								sc.nextLine();
-								continue;
-							}
-							oos.writeInt(x);
-							oos.writeInt(y);
-							oos.flush();
-							boolean ternEnd = ois.readBoolean();
-							if(ternEnd) {
-								oos.writeBoolean(ternEnd);
-								oos.flush();
-								break;
-							}
-							else {
-								oos.writeBoolean(ternEnd);
-								oos.flush();
-								String reInput = ois.readUTF();
-								System.out.println(reInput);
-							}
-						}
-						
-						String myField = ois.readUTF();
-						System.out.println(myField);
-						myWin = ois.readBoolean();
-						if(myWin) break;
-					}
-					String gameOver = ois.readUTF();
-					System.out.println(gameOver);
-					break;
-				} else {
-					//입장 불가 공지 수령
-					System.out.println(ois.readUTF());
-					continue;
-				}
-			}
-		} catch(IOException e) {
+
+	private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
+		try{
+			oos.writeUTF(id);
+			oos.flush();
+		} catch(Exception e) {
+			System.out.println("대기실 입장 중 오류 발생");
 			e.printStackTrace();
 		}
+		sendChat(oos);
+		receiveChat(ois);
 	}
 
 	private void makeRoom(ObjectOutputStream oos, ObjectInputStream ois) {
@@ -351,16 +300,115 @@ public class Client{
 		}
 	}
 
-	private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
-		try{
-			oos.writeUTF(id);
-			oos.flush();
-		} catch(Exception e) {
-			System.out.println("대기실 입장 중 오류 발생");
+	private void enterRoom(ObjectOutputStream oos, ObjectInputStream ois) {
+		
+		try {
+			while(true) {
+				System.out.print("입장할 방의 번호를 입력하세요: ");
+				int roomNum;
+				try{
+					roomNum = sc.nextInt();
+					sc.nextLine();
+				} catch(InputMismatchException e) {
+					System.out.println("[입력이 올바르지 않습니다]");
+					sc.nextLine();
+					continue;
+				}
+				oos.writeInt(roomNum);
+				oos.writeUTF(id);
+				oos.flush();
+				
+				if(ois.readBoolean()) {
+					//입장 공지 수령
+					System.out.println(ois.readUTF());
+					//시작 공지 수령
+					System.out.println(ois.readUTF());
+					//첫 필드 수령
+					System.out.println(ois.readUTF());
+					boolean blackWin;
+					boolean myWin;
+					while(true) {
+						String blackTurn = ois.readUTF();
+						System.out.println(blackTurn);
+						String blackstone = ois.readUTF();
+						System.out.println(blackstone);
+						blackWin = ois.readBoolean();
+						oos.writeBoolean(blackWin);
+						oos.flush();
+						if(blackWin) break;
+						
+						while(true) {
+							System.out.print("좌표 입력:");
+							int x = 0, y = 0;
+							try {
+								x = sc.nextInt();
+								y = sc.nextInt();
+								sc.nextLine();
+							} catch(InputMismatchException e) {
+								System.out.println("[입력이 올바르지 않습니다]");
+								sc.nextLine();
+								continue;
+							}
+							oos.writeInt(x);
+							oos.writeInt(y);
+							oos.flush();
+							boolean ternEnd = ois.readBoolean();
+							if(ternEnd) {
+								oos.writeBoolean(ternEnd);
+								oos.flush();
+								break;
+							}
+							else {
+								oos.writeBoolean(ternEnd);
+								oos.flush();
+								String reInput = ois.readUTF();
+								System.out.println(reInput);
+							}
+						}
+						
+						String myField = ois.readUTF();
+						System.out.println(myField);
+						myWin = ois.readBoolean();
+						if(myWin) break;
+					}
+					String gameOver = ois.readUTF();
+					System.out.println(gameOver);
+					break;
+				} else {
+					//입장 불가 공지 수령
+					System.out.println(ois.readUTF());
+					continue;
+				}
+			}
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		sendChat(oos);
-		receiveChat(ois);
+	}
+
+	private void runResultMenu(int resultMenu, ObjectInputStream ois, ObjectOutputStream oos) {
+		switch(resultMenu){
+			case 1:
+				showMyResult(ois,oos);
+				break;
+			case 2:
+				showMyGibo(ois,oos);
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println("없는 메뉴입니다.");
+				break;
+		}
+	}
+
+
+	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
+		System.out.println("내 전적을 출력했습니다.");
+		
+	}
+
+	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
+		
 	}
 
 	private void sendChat(ObjectOutputStream oos) {
@@ -412,8 +460,19 @@ public class Client{
 		System.out.println("1. 대기실 입장하기");
 		System.out.println("2. 오목 게임 방 만들기");
 		System.out.println("3. 오목 게임 방 들어가기");
-		System.out.println("4. 로그아웃");
+		System.out.println("4. 나의 결과 및 전적 보기");
+		System.out.println("5. 로그아웃");
 		System.out.println("-------------------");
 		System.out.print("메뉴 입력: ");
+	}
+	
+	private void printResultMenu() {
+		System.out.println("--------메뉴--------");
+		System.out.println("1. 나의 게임 결과 보기");
+		System.out.println("2. 나의 게임 기보 보기");;
+		System.out.println("3. 메인화면 돌아가기");
+		System.out.println("-------------------");
+		System.out.print("메뉴 입력: ");
+		
 	}
 }

@@ -92,7 +92,7 @@ public class Server {
          try {
             while(true) {
                int mainMenu = ois.readInt();
-               if(mainMenu == 4) {
+               if(mainMenu == 5) {
                   System.out.println(oos + "메인 메뉴 종료, 로그인 메뉴로 복귀");
                   break;
                }
@@ -206,6 +206,10 @@ public class Server {
          searchRoom(oos, ois);
          System.out.println(oos + "방 입장 종료, 메뉴로 복귀");
          break;
+      case 4:
+    	  
+          System.out.println(oos + "전적 보기 종료, 메뉴로 복귀");
+          break;
    
       default:
          break;
@@ -317,7 +321,10 @@ private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
       } catch (IOException e) {}
    }
 
-   private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
+ 
+
+
+private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
       try{
          String user = ois.readUTF();
          System.out.println("[" + user + "님이 대기실에 입장했습니다]");
