@@ -31,7 +31,7 @@ public class GiboServiceImp implements GiboService{
 	}
 
 	
-	public Gibo insertGibo(Gibo gibo) {
+	public boolean insertGibo(Gibo gibo) {
 		
 		return giboDao.insertGibo(gibo);
 	}

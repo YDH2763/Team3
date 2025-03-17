@@ -22,6 +22,8 @@ public class Client{
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
+	
+	
 	public Client(Socket s) {
 		this.s = s;
 	}

@@ -90,6 +90,7 @@ public class Room {
             	   count++;
             	   Gibo gibo=new Gibo(count,x,y,id);
             	   System.out.println(gibo.toString());
+            	   giboService.insertGibo(gibo);
             	   break;
                }
             }
@@ -118,6 +119,7 @@ public class Room {
          
          
       } catch(Exception e){
+    	  e.printStackTrace();
     	  return "";
       }
    }

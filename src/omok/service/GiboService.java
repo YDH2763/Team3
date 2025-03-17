@@ -4,7 +4,7 @@ import omok.mode.vo.Gibo;
 
 public interface GiboService {
 
-	Gibo insertGibo(Gibo gibo);
+	boolean insertGibo(Gibo gibo);
 	
 	
 }

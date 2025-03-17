@@ -6,6 +6,6 @@ import omok.mode.vo.Gibo;
 
 public interface GiboDAO {
 
-	Gibo insertGibo(@Param("gibo")Gibo gibo);
+	boolean insertGibo(@Param("gibo")Gibo gibo);
 
 }

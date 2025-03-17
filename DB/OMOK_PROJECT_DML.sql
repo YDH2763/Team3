@@ -13,6 +13,7 @@ INSERT INTO RESULT(RE_WINNER, RE_RO_ID) VALUES
 
 SELECT * FROM omok.user;
 SELECT * FROM omok.room;
+SELECT * FROM omok.gibo;
 SELECT * FROM omok.result;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
