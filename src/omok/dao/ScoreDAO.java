@@ -6,11 +6,10 @@ import omok.mode.vo.Score;
 
 public interface ScoreDAO {
 
-	boolean selectBlackScore(@Param("blackScore")Score blackScore);
+	Score selectBlackScore(@Param("id")String id, @Param("black")String black);
 
-	boolean selectWhiteScore(@Param("whiteScore")Score whiteScore);
+	Score selectWhiteScore(@Param("id")String id, @Param("white")String white);
 
-	boolean selectTotalScore(@Param("allScore")Score allScore);
-
+	Score selectTotalScore(@Param("id")String id, @Param("white")String white);
 
 }

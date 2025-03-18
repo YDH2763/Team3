@@ -15,19 +15,19 @@
     	
     	<select id="selectBlackScore" resultMap="ScoreMap">
     		select s_position, s_count, s_win, s_lose, s_draw, s_u_name
-    		from score where s_u_name = #{blackScore.id} 
-    					 and s_position = #{blackScore.position}
+    		from score where s_u_name = #{id} 
+    					 and s_position = #{black}
     	</select>
     	
     	<select id="selectWhiteScore" resultMap="ScoreMap">
     		select s_position, s_count, s_win, s_lose, s_draw, s_u_name
-    		from score where s_u_name = #{whiteScore.id} 
-    					 and s_position = #{whiteScore.position}
+    		from score where s_u_name = #{id} 
+    					 and s_position = #{white}
     	</select>
     	
     	<select id="selectTotalScore" resultMap="ScoreMap">
     		select s_position, sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
-    		from score where s_u_name = #{allScore.id} 
+    		from score where s_u_name = #{id} 
     					 
     	</select>
     	

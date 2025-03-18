@@ -357,14 +357,14 @@ public class Server {
 			String black="BLACK";
 			String white="WHITE";
 			//흑전적(승,패,무,승률)
-			Score blackScore =new Score(id,black,0,0,0,0);
-			scoreService.getBlackScore(blackScore);
+			Score blackScore =
+			scoreService.getBlackScore(id,black);
 			//백전적(승,패,무,승률)
-			Score whiteScore =new Score(id,white,0,0,0,0);
-			scoreService.getWhiteScore(whiteScore);
+			Score whiteScore =
+			scoreService.getWhiteScore(id,white);
 			//전체전적(승,패,무,승률)
-			Score allScore =new Score(id,white,0,0,0,0);
-			scoreService.getTotalScore(allScore);
+			Score allScore =
+			scoreService.getTotalScore(id,white);
 			
 		}catch(IOException e) {
 			e.printStackTrace();

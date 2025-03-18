@@ -30,19 +30,20 @@ public class ScoreServiceImp implements ScoreService{
 	}
 
 	@Override
-	public boolean getBlackScore(Score blackScore) {
-		return scoreDao.selectBlackScore(blackScore);
+	public Score getBlackScore(String id, String black) {
+		return scoreDao.selectBlackScore(id,black);
 	}
 
 	@Override
-	public boolean getWhiteScore(Score whiteScore) {
-		return scoreDao.selectWhiteScore(whiteScore);
+	public Score getWhiteScore(String id, String white) {
+		return scoreDao.selectWhiteScore(id,white);
 	}
 
 	@Override
-	public boolean getTotalScore(Score allScore) {
-		return scoreDao.selectTotalScore(allScore);
+	public Score getTotalScore(String id, String white) {
+		return scoreDao.selectTotalScore(id,white);
 	}
+
 	
 	
 }

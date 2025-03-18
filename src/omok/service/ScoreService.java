@@ -4,10 +4,12 @@ import omok.mode.vo.Score;
 
 public interface ScoreService {
 
-	boolean getBlackScore(Score blackScore);
+	Score getBlackScore(String id, String black);
 
-	boolean getWhiteScore(Score whiteScore);
+	Score getWhiteScore(String id, String white);
 
-	boolean getTotalScore(Score allScore);
+	Score getTotalScore(String id, String white);
+
+
 
 }
