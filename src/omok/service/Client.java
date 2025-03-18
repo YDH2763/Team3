@@ -403,13 +403,32 @@ public class Client{
 
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
+		try {
+			oos.writeUTF(id);
+			oos.flush();
+			//흑전적(승,패,무,승률)
+		
+			//백전적(승,패,무,승률)
+		
+			//전체전적(승,패,무,승률)
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 		System.out.println("내 전적을 출력했습니다.");
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
-		
+		try {
+			oos.writeUTF(id);
+			oos.flush();
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("기보를 출력했습니다.");
 	}
 
 	private void sendChat(ObjectOutputStream oos) {
@@ -469,8 +488,8 @@ public class Client{
 	
 	private void printResultMenu() {
 		System.out.println("--------메뉴--------");
-		System.out.println("1. 나의 게임 결과 보기");
-		System.out.println("2. 나의 게임 기보 보기");
+		System.out.println("1. 나의 전적 보기");
+		System.out.println("2. 나의 결과 및 기보 보기");
 		System.out.println("3. 메인화면 돌아가기");
 		System.out.println("-------------------");
 		System.out.print("메뉴 입력: ");
