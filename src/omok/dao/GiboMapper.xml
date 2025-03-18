@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="omok.dao.GiboDAO">
+    	<resultMap type="omok.mode.vo.Gibo" id="GiboMap">
+    		<id property="id" column="g_id"/>
+    		<result property="count" column="g_count"/>
+			<result property="x" column="g_x"/>
+			<result property="y" column="g_y"/>
+    		<result property="roomId" column="g_ro_id"/>
+    	</resultMap>
+    	
+    	<insert id="insertGibo" useGeneratedKeys="true" keyProperty="gibo.id">
+    		insert into gibo(g_count, g_x, g_y,g_ro_id) values
+    		(#{gibo.count}, #{gibo.x}, #{gibo.y}, #{gibo.roomId})
+    	</insert>
+    		
+    </mapper>

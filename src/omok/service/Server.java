@@ -30,7 +30,7 @@ public class Server {
    private static List<Room> roomList = new ArrayList<Room>();
    private Socket s;
    private final static String EXIT = "q";
-   
+   private String id;
    private UserService userService = new UserServiceImp();
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
@@ -92,7 +92,7 @@ public class Server {
          try {
             while(true) {
                int mainMenu = ois.readInt();
-               if(mainMenu == 4) {
+               if(mainMenu == 5) {
                   System.out.println(oos + "메인 메뉴 종료, 로그인 메뉴로 복귀");
                   break;
                }
@@ -118,7 +118,6 @@ public class Server {
    }
 
    private boolean logIn(ObjectOutputStream oos, ObjectInputStream ois) {
-	   String id;
 	   String pw;
 	   try {
 		   id = ois.readUTF();
@@ -150,7 +149,7 @@ public class Server {
    }
 
    private void signIn(ObjectOutputStream oos, ObjectInputStream ois) {
-	   String id;
+
 	   String pw;
 	   try {
 		   id = ois.readUTF();
@@ -193,7 +192,7 @@ public class Server {
    }
    
    private void runMenu(int menu, ObjectOutputStream oos, ObjectInputStream ois) {
-      switch (menu) {
+	  switch (menu) {
       case 1:
          chat(oos, ois);
          System.out.println(oos + "채팅 종료, 메뉴로 복귀");
@@ -206,6 +205,10 @@ public class Server {
          searchRoom(oos, ois);
          System.out.println(oos + "방 입장 종료, 메뉴로 복귀");
          break;
+      case 4:
+    	  runResultMenu(oos,ois);
+          System.out.println(oos + "전적 보기 종료, 메뉴로 복귀");
+          break;
    
       default:
          break;
@@ -218,7 +221,7 @@ public class Server {
       try {
          while(true) {
             int roomNum = ois.readInt();
-            String id = ois.readUTF();
+            id = ois.readUTF();
             System.out.println("[" + oos + " 생성방 번호 " + roomNum + " 입력 받음]");
             room = new Room(roomNum, id, null, oos, ois);
             //room1 =
@@ -271,61 +274,119 @@ public class Server {
    }
 
 
-private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
-      System.out.println("[들어갈 방 번호 입력 대기 중]"); 
-      
-      try {
-         while(true) {
-            int roomNum = ois.readInt();
-            String id = ois.readUTF();
-            System.out.println("[" + oos + " 입장방 번호 " + roomNum + " 입력 받음]");
-            Room tmp = new Room(roomNum, null, id, oos, ois);
-                  
-            boolean exist = roomService.containsOpeningRoom(tmp);
-            
-            if(!exist) {
-            	oos.writeBoolean(false);
-                send(oos, "[존재하지 않는 방입니다]");
-                continue;
-            }
-            
-            for (Room room : roomList) {
-               if(room.equals(tmp)) {
-                  if(roomService.getFull(room).equals("N")) {
-                     room.setClient(oos, ois, id);			//리스트에 상대방 추가
-                     roomService.enteredRoom(room, tmp);	//DB에 상대방 추가
-                     for (ObjectOutputStream client : room.getOosList()) {
-                        client.writeBoolean(true);
-                        if(client == oos) {
-                           send(client, "[" + roomNum + "번 방에 입장하였습니다]");
-                           System.out.println(room.toString());
-                        } else {
-                           send(client, "[상대가 입장하였습니다]");
-                        }
-                        
-                        send(client, "[게임이 시작됩니다]");
-                     }
-                     room.gameStart(roomNum, oos, ois);
-                     return;
-                  } else {
-                     oos.writeBoolean(false);
-                     send(oos, "[방의 정원이 가득 찼습니다]");
-                  }
-               }
-            }
-         }
-      } catch (IOException e) {}
-   }
+	private void searchRoom(ObjectOutputStream oos, ObjectInputStream ois) {
+	      System.out.println("[들어갈 방 번호 입력 대기 중]"); 
+	      
+	      try {
+	         while(true) {
+	            int roomNum = ois.readInt();
+	            id = ois.readUTF();
+	            System.out.println("[" + oos + " 입장방 번호 " + roomNum + " 입력 받음]");
+	            Room tmp = new Room(roomNum, null, id, oos, ois);
+	                  
+	            boolean exist = roomService.containsOpeningRoom(tmp);
+	            
+	            if(!exist) {
+	            	oos.writeBoolean(false);
+	                send(oos, "[존재하지 않는 방입니다]");
+	                continue;
+	            }
+	            
+	            for (Room room : roomList) {
+	               if(room.equals(tmp)) {
+	                  if(roomService.getFull(room).equals("N")) {
+	                     room.setClient(oos, ois, id);			//리스트에 상대방 추가
+	                     roomService.enteredRoom(room, tmp);	//DB에 상대방 추가
+	                     for (ObjectOutputStream client : room.getOosList()) {
+	                        client.writeBoolean(true);
+	                        if(client == oos) {
+	                           send(client, "[" + roomNum + "번 방에 입장하였습니다]");
+	                           System.out.println(room.toString());
+	                        } else {
+	                           send(client, "[상대가 입장하였습니다]");
+	                        }
+	                        
+	                        send(client, "[게임이 시작됩니다]");
+	                     }
+	                     room.gameStart(roomNum, oos, ois);
+	                     return;
+	                  } else {
+	                     oos.writeBoolean(false);
+	                     send(oos, "[방의 정원이 가득 찼습니다]");
+	                  }
+	               }
+	            }
+	         }
+	      } catch (IOException e) {}
+	   }
+	
+	 
+	
+	
+	
+	private void runResultMenu(ObjectOutputStream oos, ObjectInputStream ois) {
+		 try {
+			 int resultMenu = ois.readInt();
+			 switch(resultMenu) {
+			 case 1:
+				 showMyResult(oos, ois);
+		         System.out.println(oos + "전적 보기 완료");
+		         break;
+			 case 2:
+				 showMyGibo(oos, ois);
+		         System.out.println(oos + "결과 및 기보 보기 완료");
+		         break;
+		         
+		     default:
+		    	 break;
+			 }
+			 
+		 }catch(IOException e) {
+				e.printStackTrace();
+			}
+		
+	}
 
-   private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
-      try{
-         String user = ois.readUTF();
-         System.out.println("[" + user + "님이 대기실에 입장했습니다]");
-         receive(user, oos, ois);
-      } catch(Exception e) {
-         System.out.println("대기실 입장 중 예기치 못한 오류 발생");
-      }
-   }
+
+	private void showMyResult(ObjectOutputStream oos, ObjectInputStream ois) {
+		try {
+			id = ois.readUTF();
+			String black="BLACK";
+			String white="WHITE";
+			//흑전적(승,패,무,승률)
+			
+			//백전적(승,패,무,승률)
+		
+			//전체전적(승,패,무,승률)
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	private void showMyGibo(ObjectOutputStream oos, ObjectInputStream ois) {
+		try {
+			id = ois.readUTF();
+			
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	private void chat(ObjectOutputStream oos, ObjectInputStream ois) {
+	      try{
+	         String user = ois.readUTF();
+	         System.out.println("[" + user + "님이 대기실에 입장했습니다]");
+	         receive(user, oos, ois);
+	      } catch(Exception e) {
+	         System.out.println("대기실 입장 중 예기치 못한 오류 발생");
+	      }
+	   }
 
    private void receive(String user, ObjectOutputStream oos, ObjectInputStream ois) {
       try {
