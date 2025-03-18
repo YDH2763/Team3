@@ -24,11 +24,19 @@ public class Score {
 		this.draw=draw;
 	}
 	
+	public Score(String id, int count, int win, int lose,int draw) {
+		this.id=id;
+		this.count=count;
+		this.win=win;
+		this.lose=lose;
+		this.draw=draw;
+	}
+	
 	public Score() {}
 
 	@Override
 	public String toString() {
-		return count+"전 "+win+"승 "+lose+"패 "+draw+"무 승률 : "+(win/count)*100+"%";
+		return count+"전 "+win+"승 "+lose+"패 "+draw+"무 승률 : "+((double)win/(double)count)*100+"%";
 	}
 	
 	

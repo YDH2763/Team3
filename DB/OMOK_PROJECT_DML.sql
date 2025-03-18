@@ -17,8 +17,19 @@ SELECT * FROM omok.gibo;
 SELECT * FROM omok.result;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
+select s_position, sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
+    		from score where s_u_name = "dbehdgns1" and s_position = "BLACK"
+    		group by s_u_name;
+select s_position, s_count, s_win, s_lose, s_draw, s_u_name
+    		from score where s_u_name = "dbehdgns1"
+    					 and s_position = "BLACK";
+                         
+select sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
+    		from score where s_u_name = "dbehdgns1" 
+    		group by s_u_name;
 
-
+SELECT SUM(S_COUNT), SUM(S_WIN),SUM(S_LOSE),SUM(S_DRAW),S_U_NAME
+FROM SCORE WHERE S_U_NAME="dbehdgns1";
 
 select if(,ro_b_u_name,ro_w_u_name) from result
 join room on ro_id = re_ro_id

@@ -25,10 +25,14 @@
     					 and s_position = #{white}
     	</select>
     	
-    	<select id="selectTotalScore" resultMap="ScoreMap">
-    		select s_position, sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
-    		from score where s_u_name = #{id} 
+    	<select id="selectTotalScore" resultType="omok.mode.vo.Score">
+    		select sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
+    		from score where s_u_name = #{id}
+    		group by s_u_name
     					 
+    	</select>
+    	<select id="getSumScore" resultType="java.lang.Integer">
+    		select sum(s_count) from score where s_u_name = #{id};
     	</select>
     	
   </mapper>

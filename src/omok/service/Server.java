@@ -363,8 +363,9 @@ public class Server {
 			Score whiteScore =
 			scoreService.getWhiteScore(id,white);
 			//전체전적(승,패,무,승률)
+			
 			Score allScore =
-			scoreService.getTotalScore(id,white);
+			scoreService.getTotalScore(id,black);
 			
 		}catch(IOException e) {
 			e.printStackTrace();

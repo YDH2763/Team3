@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 import omok.mode.vo.Chat;
 
+import omok.mode.vo.Score;
+
 /*
  * Client 클래스를 이용하여
  * 서버와 클라이언트가 문자열을 주고받는 예제
@@ -22,6 +24,7 @@ public class Client{
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
+	private ScoreService scoreService = new ScoreServiceImp();
 	
 	
 	public Client(Socket s) {
@@ -404,6 +407,24 @@ public class Client{
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
 		try {
+			
+			String black="BLACK";
+			String white="WHITE";
+			//흑전적(승,패,무,승률)
+			Score blackScore =
+			scoreService.getBlackScore(id,black);
+			System.out.println("흑전적 : "+blackScore.toString());
+			//백전적(승,패,무,승률)
+			Score whiteScore =
+			scoreService.getWhiteScore(id,white);
+			System.out.println("백전적 : "+whiteScore.toString());
+			//전체전적(승,패,무,승률)
+			int sumScore = scoreService.getSumScore(id);
+			System.out.println(sumScore);
+			Score allScore =
+			scoreService.getTotalScore(id,black);
+			System.out.println("전체전적 : "+scoreService.getTotalScore(id,black).toString());
+			
 			oos.writeUTF(id);
 			oos.flush();
 			//흑전적(승,패,무,승률)

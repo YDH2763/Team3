@@ -10,6 +10,8 @@ public interface ScoreDAO {
 
 	Score selectWhiteScore(@Param("id")String id, @Param("white")String white);
 
-	Score selectTotalScore(@Param("id")String id, @Param("white")String white);
+	Score selectTotalScore(@Param("id")String id,  @Param("black")String black);
+
+	int getSumScore(@Param("id")String id);
 
 }

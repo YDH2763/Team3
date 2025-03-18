@@ -40,8 +40,14 @@ public class ScoreServiceImp implements ScoreService{
 	}
 
 	@Override
-	public Score getTotalScore(String id, String white) {
-		return scoreDao.selectTotalScore(id,white);
+	public Score getTotalScore(String id, String black) {
+		return scoreDao.selectTotalScore(id, black);
+	}
+
+	@Override
+	public int getSumScore(String id) {
+		// TODO Auto-generated method stub
+		return scoreDao.getSumScore(id);
 	}
 
 	
