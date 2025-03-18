@@ -403,8 +403,9 @@ public class Client{
 
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
-		System.out.println("내 전적을 출력했습니다.");
 		
+		
+		System.out.println("내 전적을 출력했습니다.");
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
@@ -469,7 +470,7 @@ public class Client{
 	private void printResultMenu() {
 		System.out.println("--------메뉴--------");
 		System.out.println("1. 나의 게임 결과 보기");
-		System.out.println("2. 나의 게임 기보 보기");;
+		System.out.println("2. 나의 게임 기보 보기");
 		System.out.println("3. 메인화면 돌아가기");
 		System.out.println("-------------------");
 		System.out.print("메뉴 입력: ");

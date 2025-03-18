@@ -17,3 +17,39 @@ SELECT * FROM omok.gibo;
 SELECT * FROM omok.result;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
+
+
+
+select if(,ro_b_u_name,ro_w_u_name) from result
+join room on ro_id = re_ro_id
+;
+
+select * from result join room on re_ro_id=ro_id;
+
+-- 특정유저(dbehdgns2)가 흑팀(U_NAME=RO_B_U_NAME)일때 결과 출력
+SELECT U_NAME AS"유저(흑팀)", RO_ID AS"방아이디",RO_NUM AS"방번호",RO_W_U_NAME AS"상대방(백팀)", RE_WINNER AS"게임결과", WR_BLACK AS"승률", WR_ALL AS"전체승률"
+FROM RESULT
+JOIN ROOM ON RO_ID=RE_RO_ID
+JOIN `USER` ON U_NAME = RO_B_U_NAME
+JOIN WINNING_RATE ON WR_U_NAME=U_NAME
+WHERE U_NAME="dbehdgns2";
+
+-- 특정유저(dbehdgns2)가 백팀(U_NAME=RO_W_U_NAME)일때 결과 출력
+SELECT U_NAME AS"유저(백팀)", RO_ID AS"방아이디",RO_NUM AS"방번호",RO_B_U_NAME AS"상대방(흑팀)", RE_WINNER AS"게임결과", WR_WHITE AS"승률", WR_ALL AS"전체승률"
+FROM RESULT
+JOIN ROOM ON RO_ID=RE_RO_ID
+JOIN `USER` ON U_NAME = RO_W_U_NAME
+JOIN WINNING_RATE ON WR_U_NAME=U_NAME
+WHERE U_NAME="dbehdgns2";
+
+-- 특정유저(dbehdgns2)가 흑팀(U_NAME=RO_B_U_NAME)일때 특정`방아이디`(3)기보 출력
+SELECT U_NAME, GIBO.* FROM GIBO
+JOIN ROOM ON G_RO_ID=RO_ID
+JOIN `USER` ON U_NAME=RO_B_U_NAME
+WHERE U_NAME="dbehdgns2" AND G_RO_ID=3;
+
+-- 특정유저(dbehdgns2)가 백팀(U_NAME=RO_W_U_NAME)일때 특정`방아이디`(2)기보 출력
+SELECT U_NAME, GIBO.* FROM GIBO
+JOIN ROOM ON G_RO_ID=RO_ID
+JOIN `USER` ON U_NAME=RO_W_U_NAME
+WHERE U_NAME="dbehdgns2" AND G_RO_ID=2;
