@@ -1,7 +1,5 @@
 package omok.service;
 
-import java.util.List;
-
 import omok.mode.vo.Room;
 
 public interface RoomService {

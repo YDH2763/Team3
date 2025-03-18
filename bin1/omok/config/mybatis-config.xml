@@ -18,7 +18,7 @@
     <mapper resource="omok/dao/UserMapper.xml"/>
     <mapper resource="omok/dao/ResultMapper.xml"/>
     <mapper resource="omok/dao/RoomMapper.xml"/>
-    <mapper resource="omok/dao/StoneMapper.xml"/>
+    <mapper resource="omok/dao/GiboMapper.xml"/>
     <mapper resource="omok/dao/ScoreMapper.xml"/>
   </mappers>
 </configuration>

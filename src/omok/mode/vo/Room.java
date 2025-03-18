@@ -7,8 +7,6 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import omok.mode.vo.Gibo;
-import omok.mode.vo.Result;
 import omok.service.GiboService;
 import omok.service.GiboServiceImp;
 import omok.service.OmokProgram;

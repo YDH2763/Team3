@@ -4,7 +4,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import omok.mode.vo.Field;
 import omok.mode.vo.Stone;
 
