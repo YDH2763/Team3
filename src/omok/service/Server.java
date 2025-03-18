@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import omok.dao.UserDAO;
 import omok.mode.vo.Chat;
+import omok.mode.vo.Score;
 import omok.mode.vo.Room;
 import omok.mode.vo.User;
 
@@ -34,6 +35,8 @@ public class Server {
    private UserService userService = new UserServiceImp();
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
+   private ScoreService scoreService = new ScoreServiceImp();
+   
    
    public Server(Socket s) {
       this.s = s;
@@ -354,10 +357,14 @@ public class Server {
 			String black="BLACK";
 			String white="WHITE";
 			//흑전적(승,패,무,승률)
-			
+			Score blackScore =new Score(id,black,0,0,0,0);
+			scoreService.getBlackScore(blackScore);
 			//백전적(승,패,무,승률)
-		
+			Score whiteScore =new Score(id,white,0,0,0,0);
+			scoreService.getWhiteScore(whiteScore);
 			//전체전적(승,패,무,승률)
+			Score allScore =new Score(id,white,0,0,0,0);
+			scoreService.getTotalScore(allScore);
 			
 		}catch(IOException e) {
 			e.printStackTrace();

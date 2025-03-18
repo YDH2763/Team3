@@ -407,7 +407,7 @@ public class Client{
 			oos.writeUTF(id);
 			oos.flush();
 			//흑전적(승,패,무,승률)
-		
+			
 			//백전적(승,패,무,승률)
 		
 			//전체전적(승,패,무,승률)
