@@ -74,20 +74,20 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public void setOnline(User user) {
-		userDao.setOnline(user);
+	public void setOnline(String userName) {
+		userDao.setOnline(userName);
 	}
 
 	@Override
-	public String getOnline(User user) {
+	public String getOnline(String userName) {
 		
-		return userDao.getOnline(user);
+		return userDao.getOnline(userName);
 	}
 
 	@Override
-	public void setOffline(User user) {
+	public void setOffline(String userName) {
 		
-		userDao.setOffline(user);
+		userDao.setOffline(userName);
 	}
 
 }

@@ -179,6 +179,9 @@ public class Client{
 						sc.nextLine();
 						continue;
 					}
+					oos.writeInt(resultMenu);
+					oos.flush();
+					
 					runResultMenu(resultMenu, ois, oos);
 					
 				}while(resultMenu != 3);
@@ -188,7 +191,6 @@ public class Client{
 			}
 			break;
 		case 5:
-			
 			break;
 
 		default:
@@ -415,27 +417,16 @@ public class Client{
 
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
-
-		
-		String black="BLACK";
-		String white="WHITE";
-		//흑전적(승,패,무,승률)
-		Score blackScore =
-		scoreService.getBlackScore(id,black);
-		System.out.println("흑전적 : "+blackScore.toString());
-		//백전적(승,패,무,승률)
-		Score whiteScore =
-		scoreService.getWhiteScore(id,white);
-		System.out.println("백전적 : "+whiteScore.toString());
-		//전체전적(승,패,무,승률)
-		Score allScore=new Score(id,black,
-				(blackScore.getCount()+whiteScore.getCount()),
-				(blackScore.getWin()+whiteScore.getWin()),
-				(blackScore.getLose()+whiteScore.getLose()),
-				(blackScore.getDraw()+whiteScore.getDraw()));
-		System.out.println("전체전적 : "+allScore.toString());
-		
-		System.out.println("내 전적을 출력했습니다.");
+		try {
+			String blackScore = ois.readUTF();
+			String whiteScore = ois.readUTF();
+			String allScore = ois.readUTF();
+			System.out.println(blackScore);	
+			System.out.println(whiteScore);	
+			System.out.println(allScore);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {

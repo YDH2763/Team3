@@ -28,20 +28,20 @@
 	<select id="getOnline">
 		select u_online
 		from user
-		where u_name = #{user.id}
+		where u_name = #{userName}
 	</select>
 	
 	<update id="setOnline">
 		update user
 		set
 			u_online = "Y"
-		where u_name = #{user.id}
+		where u_name = #{userName}
 	</update>
 	
 	<update id="setOffline">
 		update user
 		set
 			u_online = "N"
-		where u_name = #{user.id}
+		where u_name = #{userName}
 	</update>
 </mapper>

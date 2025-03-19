@@ -10,10 +10,10 @@ public interface UserService {
 	
 	boolean contains(User user);
 
-	void setOnline(User user);
+	void setOnline(String userName);
 
-	String getOnline(User user);
+	String getOnline(String userName);
 
-	void setOffline(User user);
+	void setOffline(String userName);
 	
 }

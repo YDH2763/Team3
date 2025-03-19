@@ -12,9 +12,9 @@ public interface UserDAO {
 
 	boolean insertUser(@Param("user")User user);
 
-	void setOnline(@Param("user")User user);
+	void setOnline(@Param("userName")String userName);
 
-	String getOnline(@Param("user")User user);
+	String getOnline(@Param("userName")String userName);
 
-	void setOffline(@Param("user")User user);
+	void setOffline(@Param("userName")String userName);
 }
