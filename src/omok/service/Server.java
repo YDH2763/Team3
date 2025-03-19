@@ -389,9 +389,10 @@ public class Server {
 		try {
 			id = ois.readUTF();
 			//게임 결과를 출력
-			List<Result> blackResult= resultService.getBlackResult(id);
-			List<Result> whiteResult= resultService.getWhiteResult(id);
-			
+			List<Result> resultList=resultService.getResultList(id);
+			for(Result re : resultList) {
+				System.out.println(re);
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

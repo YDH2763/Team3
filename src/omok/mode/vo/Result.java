@@ -1,5 +1,7 @@
 package omok.mode.vo;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -8,6 +10,7 @@ public class Result {
 	
 	private String winner;
 	private int roomId;
+	//private Date date;
 	
 	public Result(String winner, int roomId) {
 		this.winner=winner;	//re_winner

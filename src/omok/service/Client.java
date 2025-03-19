@@ -5,10 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import omok.mode.vo.Chat;
-
+import omok.mode.vo.Result;
 import omok.mode.vo.Score;
 
 /*
@@ -25,6 +26,7 @@ public class Client{
 	private Scanner sc = new Scanner(System.in);
 	
 	private ScoreService scoreService = new ScoreServiceImp();
+	private ResultService resultService = new ResultServiceImp();
 	
 	
 	public Client(Socket s) {
@@ -435,6 +437,13 @@ public class Client{
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
+		
+		
+		List<Result> resultList=resultService.getResultList(id);
+		for(Result re : resultList) {
+			System.out.println(re);
+		}
+		
 		try {
 			oos.writeUTF(id);
 			oos.flush();
