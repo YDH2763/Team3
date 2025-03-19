@@ -438,10 +438,11 @@ public class Client{
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
 		
-		
-		List<Result> resultList=resultService.getResultList(id);
+		String name=id;
+		System.out.println(name);
+		List<Result> resultList=resultService.getResultList(name);
 		for(Result re : resultList) {
-			System.out.println(re);
+			System.out.println(re.getWinner());
 		}
 		
 		try {

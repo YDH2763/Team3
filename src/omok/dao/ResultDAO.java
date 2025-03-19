@@ -10,6 +10,6 @@ public interface ResultDAO {
 	
 	boolean insertResult(@Param("winner")String winner, @Param("roomId")int id);
 
-	List<Result> selectResultList(@Param("id")String id);
+	List<Result> selectResultList(@Param("name")String name);
 	
 }

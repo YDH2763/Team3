@@ -8,7 +8,7 @@ public interface ResultService {
 
 	boolean insertResult(String winner, int id);
 
-	List<Result> getResultList(String id);
+	List<Result> getResultList(String name);
 
 
 }
