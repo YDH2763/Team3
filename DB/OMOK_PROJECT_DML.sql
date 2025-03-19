@@ -18,12 +18,6 @@ SELECT * FROM omok.result;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 
-
-
-select if(,ro_b_u_name,ro_w_u_name) from result
-join room on ro_id = re_ro_id
-;
-
 select * from result join room on re_ro_id=ro_id;
 
 -- 특정유저(dbehdgns2)가 흑팀(U_NAME=RO_B_U_NAME)일때 결과 출력

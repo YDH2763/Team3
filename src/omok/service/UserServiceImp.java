@@ -29,6 +29,7 @@ public class UserServiceImp implements UserService{
 	      }
 	}
 	
+	@Override
 	public boolean isNewId(User tmp) {
 		   if(tmp == null) return false;
 			
@@ -39,6 +40,7 @@ public class UserServiceImp implements UserService{
 		   return true;
 	}
 
+	@Override
 	public boolean insertUser(User user) {
 			
 		if(user == null) return false;
@@ -50,6 +52,7 @@ public class UserServiceImp implements UserService{
 		return userDao.insertUser(user);
 	}
 
+	@Override
 	public boolean contains(User user) {
 		
 		if(user.getPw() == "") {
