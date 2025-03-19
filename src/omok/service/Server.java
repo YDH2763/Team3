@@ -112,30 +112,39 @@ public class Server {
 
    private boolean logIn(ObjectOutputStream oos, ObjectInputStream ois) {
 	   String pw;
+	   User user = null;
 	   try {
 		   id = ois.readUTF();
 		   System.out.println("닉네임 "  + id + " 수신");
 		   pw = ois.readUTF();
 		   System.out.println("비밀번호 "  + pw + " 수신");
 		   
-		   User user = new User(id, pw, "");
+		   user = new User(id, pw, "");
 		   
 		   boolean existsUser = userService.contains(user);
 		   
 		   if(existsUser) {
-			   oos.writeBoolean(true);
+			   String online = userService.getOnline(user);
+			   if(online.equals("Y")) {
+				   oos.writeInt(3);		//result 3: 접속중인 유저
+				   oos.flush();
+			   }
+			   userService.setOnline(user);
+			   oos.writeInt(1);			//result 1: 로그인 성공
 			   oos.flush();
 			   return true;
 		   } else {
-			   oos.writeBoolean(false);
+			   oos.writeInt(2);			//result 2: 정보 불일치
 			   oos.flush();
 			   return false;
 		   }
 	   } catch (SocketException e) {
            System.out.println("[클라이언트 강제 종료]");
+           userService.setOffline(user);
            return false;
         }catch (Exception e) {
 		   System.out.println("[로그인 수신 중 예기치 못한 오류 발생]");
+		   userService.setOffline(user);
 		   e.printStackTrace();
 		   return false;
 	   }

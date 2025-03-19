@@ -24,4 +24,24 @@
 		select u_name from user
 		where u_name = #{user.id}
 	</select>
+	
+	<select id="getOnline">
+		select u_online
+		from user
+		where u_name = #{user.id}
+	</select>
+	
+	<update id="setOnline">
+		update user
+		set
+			u_online = "Y"
+		where u_name = #{user.id}
+	</update>
+	
+	<update id="setOffline">
+		update user
+		set
+			u_online = "N"
+		where u_name = #{user.id}
+	</update>
 </mapper>

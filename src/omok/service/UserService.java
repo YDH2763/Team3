@@ -9,5 +9,11 @@ public interface UserService {
 	boolean insertUser(User user);
 	
 	boolean contains(User user);
+
+	void setOnline(User user);
+
+	String getOnline(User user);
+
+	void setOffline(User user);
 	
 }

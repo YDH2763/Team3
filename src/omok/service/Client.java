@@ -106,16 +106,20 @@ public class Client{
 			oos.writeUTF(pw);
 			oos.flush();
 			
-			boolean success = ois.readBoolean();
+			int result = ois.readInt();
 			
-			if(success) {
+			if(result == 1) {
 				System.out.println("\n***** " + id + "님 환영합니다. *****\n");
 				return true;
 			}
-			else {
+			else if(result == 2){
 				System.out.println("아이디 또는 비밀번호를 확인하세요.");
 				return false;
 			}
+			else if(result == 3) {
+				System.out.println("이미 접속중인 회원입니다.");
+				return false;
+			} else return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

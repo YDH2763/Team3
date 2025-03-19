@@ -62,15 +62,32 @@ public class UserServiceImp implements UserService{
 				return true;
 			}
 		}
-		//DB에서 user를 이용하여 학생 정보를 가져옴
+		//DB에서 user를 이용하여 유저 정보를 가져옴
 		User dbUser = userDao.selectUser(user);
 		
-		//DB에서 가져온 학생 정보가 있으면 중복 -> true를 반환
+		//DB에서 가져온 유저 정보가 있으면 중복 -> true를 반환
 		if(dbUser != null) {
 			return true;
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void setOnline(User user) {
+		userDao.setOnline(user);
+	}
+
+	@Override
+	public String getOnline(User user) {
+		
+		return userDao.getOnline(user);
+	}
+
+	@Override
+	public void setOffline(User user) {
+		
+		userDao.setOffline(user);
 	}
 
 }
