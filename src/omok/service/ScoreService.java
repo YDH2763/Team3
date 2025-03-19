@@ -8,9 +8,7 @@ public interface ScoreService {
 
 	Score getWhiteScore(String id, String white);
 
-	Score getTotalScore(String id, String black);
 
-	int getSumScore(String id);
 
 
 

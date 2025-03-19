@@ -389,7 +389,8 @@ public class Client{
 	}
 
 	private void runResultMenu(int resultMenu, ObjectInputStream ois, ObjectOutputStream oos) {
-		switch(resultMenu){
+		try {
+			switch(resultMenu){
 			case 1:
 				showMyResult(ois,oos);
 				break;
@@ -402,41 +403,33 @@ public class Client{
 				System.out.println("없는 메뉴입니다.");
 				break;
 		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
-		try {
-			
-			String black="BLACK";
-			String white="WHITE";
-			//흑전적(승,패,무,승률)
-			Score blackScore =
-			scoreService.getBlackScore(id,black);
-			System.out.println("흑전적 : "+blackScore.toString());
-			//백전적(승,패,무,승률)
-			Score whiteScore =
-			scoreService.getWhiteScore(id,white);
-			System.out.println("백전적 : "+whiteScore.toString());
-			//전체전적(승,패,무,승률)
-			int sumScore = scoreService.getSumScore(id);
-			System.out.println(sumScore);
-			Score allScore =
-			scoreService.getTotalScore(id,black);
-			System.out.println("전체전적 : "+scoreService.getTotalScore(id,black).toString());
-			
-			oos.writeUTF(id);
-			oos.flush();
-			//흑전적(승,패,무,승률)
-			
-			//백전적(승,패,무,승률)
+
 		
-			//전체전적(승,패,무,승률)
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		
+		String black="BLACK";
+		String white="WHITE";
+		//흑전적(승,패,무,승률)
+		Score blackScore =
+		scoreService.getBlackScore(id,black);
+		System.out.println("흑전적 : "+blackScore.toString());
+		//백전적(승,패,무,승률)
+		Score whiteScore =
+		scoreService.getWhiteScore(id,white);
+		System.out.println("백전적 : "+whiteScore.toString());
+		//전체전적(승,패,무,승률)
+		Score allScore=new Score(id,black,
+				(blackScore.getCount()+whiteScore.getCount()),
+				(blackScore.getWin()+whiteScore.getWin()),
+				(blackScore.getLose()+whiteScore.getLose()),
+				(blackScore.getDraw()+whiteScore.getDraw()));
+		System.out.println("전체전적 : "+allScore.toString());
 		
 		System.out.println("내 전적을 출력했습니다.");
 	}

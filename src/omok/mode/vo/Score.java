@@ -24,13 +24,6 @@ public class Score {
 		this.draw=draw;
 	}
 	
-	public Score(String id, int count, int win, int lose,int draw) {
-		this.id=id;
-		this.count=count;
-		this.win=win;
-		this.lose=lose;
-		this.draw=draw;
-	}
 	
 	public Score() {}
 

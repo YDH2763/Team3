@@ -7,10 +7,33 @@
   		<id property="id" column="re_id"/>
 		<result property="winner" column="re_winner"/>
 		<result property="roomId" column="re_ro_id"/>
+  		
+  		<association property="room" javaType="omok.mode.vo.Room">
+  			<id property="id" column="ro_id"/>
+			<result property="roomNum" column="ro_num"/>
+			<result property="bName" column="ro_b_u_name"/>
+			<result property="wName" column="ro_w_u_name"/>
+  		</association>
+  	
   	</resultMap>
-  
+  	
 	<insert id="insertResult">
   		insert into result(re_winner, re_ro_id) values
   		(#{winner}, #{roomId})
   	</insert>
+  	
+  	<select id="selectBlackResult">
+  		select ro_w_u_name, if(re_winner = "BLACK","WIN","LOSE")
+  		from result
+  		join room on ro_id = re_ro_id
+  		where ro_b_u_name=#{id}
+  	</select>
+  	
+  	<select id="selectWhiteResult">
+  		select ro_w_u_name, if(re_winner = "WHITE","WIN","LOSE")
+  		from result
+  		join room on ro_id = re_ro_id
+  		where ro_w_u_name=#{id}
+  	</select>
+  	
   </mapper>

@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import omok.dao.UserDAO;
 import omok.mode.vo.Chat;
+import omok.mode.vo.Result;
 import omok.mode.vo.Score;
 import omok.mode.vo.Room;
 import omok.mode.vo.User;
@@ -359,13 +360,23 @@ public class Server {
 			//흑전적(승,패,무,승률)
 			Score blackScore =
 			scoreService.getBlackScore(id,black);
+			System.out.println("흑전적 : "+blackScore.toString());
 			//백전적(승,패,무,승률)
 			Score whiteScore =
 			scoreService.getWhiteScore(id,white);
+			System.out.println("백전적 : "+whiteScore.toString());
 			//전체전적(승,패,무,승률)
+			Score allScore=new Score(id,black,
+					(blackScore.getCount()+whiteScore.getCount()),
+					(blackScore.getWin()+whiteScore.getWin()),
+					(blackScore.getLose()+whiteScore.getLose()),
+					(blackScore.getDraw()+whiteScore.getDraw()));
+			System.out.println("전체전적 : "+allScore.toString());
 			
-			Score allScore =
-			scoreService.getTotalScore(id,black);
+			oos.writeObject(blackScore);
+			oos.writeObject(whiteScore);
+			oos.writeObject(allScore);
+			oos.flush();
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -377,7 +388,9 @@ public class Server {
 	private void showMyGibo(ObjectOutputStream oos, ObjectInputStream ois) {
 		try {
 			id = ois.readUTF();
-			
+			//게임 결과를 출력
+			List<Result> blackResult= resultService.getBlackResult(id);
+			List<Result> whiteResult= resultService.getWhiteResult(id);
 			
 		}catch(IOException e) {
 			e.printStackTrace();
