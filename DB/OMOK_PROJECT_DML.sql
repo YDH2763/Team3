@@ -14,7 +14,7 @@ INSERT INTO RESULT(RE_WINNER, RE_RO_ID) VALUES
 SELECT * FROM omok.user;
 SELECT * FROM omok.room;
 SELECT * FROM omok.gibo;
-SELECT * FROM omok.result;
+SELECT * FROM omok.result order by re_date DESC;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 select s_position, sum(s_count), sum(s_win), sum(s_lose), sum(s_draw), s_u_name
@@ -88,6 +88,7 @@ ORDER BY RE_DATE DESC;
 
 SELECT 
 	IF(RO_W_U_NAME != "dbehdgns1", RO_W_U_NAME, RO_B_U_NAME)AS 상대유저,
+    
     IF(RO_B_U_NAME = "dbehdgns1" AND RE_WINNER = "BLACK","WIN",
 	IF(RO_W_U_NAME = "dbehdgns1" AND RE_WINNER = "WHITE","WIN","LOSE")) AS 승패,
     RE_DATE AS 일시
