@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 import omok.mode.vo.Chat;
 
+import omok.mode.vo.Score;
+
 /*
  * Client 클래스를 이용하여
  * 서버와 클라이언트가 문자열을 주고받는 예제
@@ -22,6 +24,7 @@ public class Client{
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
 	
+	private ScoreService scoreService = new ScoreServiceImp();
 	
 	
 	public Client(Socket s) {
@@ -390,7 +393,8 @@ public class Client{
 	}
 
 	private void runResultMenu(int resultMenu, ObjectInputStream ois, ObjectOutputStream oos) {
-		switch(resultMenu){
+		try {
+			switch(resultMenu){
 			case 1:
 				showMyResult(ois,oos);
 				break;
@@ -403,23 +407,33 @@ public class Client{
 				System.out.println("없는 메뉴입니다.");
 				break;
 		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 
 	private void showMyResult(ObjectInputStream ois, ObjectOutputStream oos) {
-		try {
-			oos.writeUTF(id);
-			oos.flush();
-			//흑전적(승,패,무,승률)
+
 		
-			//백전적(승,패,무,승률)
-		
-			//전체전적(승,패,무,승률)
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		
+		String black="BLACK";
+		String white="WHITE";
+		//흑전적(승,패,무,승률)
+		Score blackScore =
+		scoreService.getBlackScore(id,black);
+		System.out.println("흑전적 : "+blackScore.toString());
+		//백전적(승,패,무,승률)
+		Score whiteScore =
+		scoreService.getWhiteScore(id,white);
+		System.out.println("백전적 : "+whiteScore.toString());
+		//전체전적(승,패,무,승률)
+		Score allScore=new Score(id,black,
+				(blackScore.getCount()+whiteScore.getCount()),
+				(blackScore.getWin()+whiteScore.getWin()),
+				(blackScore.getLose()+whiteScore.getLose()),
+				(blackScore.getDraw()+whiteScore.getDraw()));
+		System.out.println("전체전적 : "+allScore.toString());
 		
 		System.out.println("내 전적을 출력했습니다.");
 	}

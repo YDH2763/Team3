@@ -16,8 +16,24 @@ public class Score {
 	private String id;
 	
 	public Score(String id, String position, int count, int win, int lose,int draw) {
-		
+		this.id=id;
+		this.position=position;
+		this.count=count;
+		this.win=win;
+		this.lose=lose;
+		this.draw=draw;
 	}
+	
+	
+	public Score() {}
+
+	@Override
+	public String toString() {
+		return count+"전 "+win+"승 "+lose+"패 "+draw+"무 승률 : "+((double)win/(double)count)*100+"%";
+	}
+	
+	
+	
 	
 	
 }

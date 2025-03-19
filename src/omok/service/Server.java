@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import omok.mode.vo.Chat;
+import omok.mode.vo.Result;
+import omok.mode.vo.Score;
 import omok.mode.vo.Room;
 import omok.mode.vo.User;
 
@@ -27,6 +29,8 @@ public class Server {
    private UserService userService = new UserServiceImp();
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
+   private ScoreService scoreService = new ScoreServiceImp();
+   
    
    public Server(Socket s) {
       this.s = s;
@@ -356,10 +360,25 @@ public class Server {
 			String black="BLACK";
 			String white="WHITE";
 			//흑전적(승,패,무,승률)
-			
+			Score blackScore =
+			scoreService.getBlackScore(id,black);
+			System.out.println("흑전적 : "+blackScore.toString());
 			//백전적(승,패,무,승률)
-		
+			Score whiteScore =
+			scoreService.getWhiteScore(id,white);
+			System.out.println("백전적 : "+whiteScore.toString());
 			//전체전적(승,패,무,승률)
+			Score allScore=new Score(id,black,
+					(blackScore.getCount()+whiteScore.getCount()),
+					(blackScore.getWin()+whiteScore.getWin()),
+					(blackScore.getLose()+whiteScore.getLose()),
+					(blackScore.getDraw()+whiteScore.getDraw()));
+			System.out.println("전체전적 : "+allScore.toString());
+			
+			oos.writeObject(blackScore);
+			oos.writeObject(whiteScore);
+			oos.writeObject(allScore);
+			oos.flush();
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -371,7 +390,9 @@ public class Server {
 	private void showMyGibo(ObjectOutputStream oos, ObjectInputStream ois) {
 		try {
 			id = ois.readUTF();
-			
+			//게임 결과를 출력
+			List<Result> blackResult= resultService.getBlackResult(id);
+			List<Result> whiteResult= resultService.getWhiteResult(id);
 			
 		}catch(IOException e) {
 			e.printStackTrace();

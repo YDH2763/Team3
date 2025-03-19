@@ -2,6 +2,7 @@ package omok.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import omok.dao.ResultDAO;
+import omok.mode.vo.Result;
 
 public class ResultServiceImp implements ResultService {
 	
@@ -33,4 +35,22 @@ public class ResultServiceImp implements ResultService {
 		
 		return resultDao.insertResult(winner, id);
 	}
+
+	@Override
+	public List<Result> getBlackResult(String id) {
+		if(id == null) {
+			return null;
+		}
+		return resultDao.selectBlackResult(id);
+	}
+
+	@Override
+	public List<Result> getWhiteResult(String id) {
+		if(id == null) {
+			return null;
+		}
+		return resultDao.selectWhiteResult(id);
+	}
+
+	
 }
