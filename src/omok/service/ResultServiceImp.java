@@ -38,11 +38,11 @@ public class ResultServiceImp implements ResultService {
 
 
 	@Override
-	public List<Result> getResultList(String name) {
-		if(name == null) {
+	public List<Result> getResultList(String id) {
+		if(id == null) {
 			return null;
 		}
-		return resultDao.selectResultList(name);
+		return resultDao.selectResultList(id);
 	}
 
 	

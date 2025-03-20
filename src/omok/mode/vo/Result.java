@@ -38,5 +38,10 @@ public class Result {
 		return "상대: " + winner + " 승패: " + result + " 시간: " + date;
 	}
 	
+	
+	public String toString2() {
+		return "상대방 : "+winner+" 결과 : "+result+" 일시 : "+date;
+	}
+	
 
 }
