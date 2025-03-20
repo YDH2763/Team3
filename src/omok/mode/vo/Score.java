@@ -27,9 +27,12 @@ public class Score {
 	
 	public Score() {}
 
+	
 	@Override
 	public String toString() {
-		return count+"전 "+win+"승 "+lose+"패 "+draw+"무 승률 : "+((double)win/(double)count)*100+"%";
+		double rate = ((double)win/(double)count)*100;
+		double roundedRate = Math.round(rate * 100) / 100.0;
+		return count+"전 "+win+"승 "+lose+"패 "+draw+"무 승률 : "+roundedRate+"%";
 	}
 	
 	

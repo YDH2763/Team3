@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="omok.dao.UserDAO">
+
+	<resultMap type ="omok.mode.vo.User" id="UserMap">
+  		<id property="id" column="u_name"/>
+		<result property="pw" column="u_pw"/>
+		<result property="del" column="u_del"/>
+  	</resultMap>
+	
+	<insert id="insertUser">
+		insert into user(u_name, u_pw) values
+			(#{user.id}, #{user.pw})
+	</insert>
+	
+	<select id="selectUser" resultMap="UserMap">
+		select * from user
+		where u_name = #{user.id} and u_pw = #{user.pw} and u_del = "N"
+	</select>
+	
+	<select id="checkId">
+		select u_name from user
+		where u_name = #{user.id}
+	</select>
+	
+	<select id="getOnline">
+		select u_online
+		from user
+		where u_name = #{userName}
+	</select>
+	
+	<update id="setOnline">
+		update user
+		set
+			u_online = "Y"
+		where u_name = #{userName}
+	</update>
+	
+	<update id="setOffline">
+		update user
+		set
+			u_online = "N"
+		where u_name = #{userName}
+	</update>
+</mapper>

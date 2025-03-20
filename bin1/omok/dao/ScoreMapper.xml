@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="omok.dao.ScoreDAO">
+  		<resultMap type="omok.mode.vo.Score" id="ScoreMap">
+    		<id property="num" column="s_num"/>
+    		<result property="position" column="s_position"/>
+    		<result property="count" column="s_count"/>
+    		<result property="win" column="s_win"/>
+    		<result property="lose" column="s_lose"/>
+    		<result property="draw" column="s_draw"/>
+    		<result property="id" column="s_u_name"/>
+    	</resultMap>
+    	
+    	<select id="selectBlackScore" resultMap="ScoreMap">
+    		select s_position, s_count, s_win, s_lose, s_draw, s_u_name
+    		from score where s_u_name = #{id} 
+    					 and s_position = #{black}
+    	</select>
+    	
+    	<select id="selectWhiteScore" resultMap="ScoreMap">
+    		select s_position, s_count, s_win, s_lose, s_draw, s_u_name
+    		from score where s_u_name = #{id} 
+    					 and s_position = #{white}
+    	</select>
+    	
+    	
+    	
+  </mapper>

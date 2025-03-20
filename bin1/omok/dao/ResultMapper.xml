@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="omok.dao.ResultDAO">
+  	<resultMap type ="omok.mode.vo.Result" id="ResultMap">
+  		<id property="id" column="re_num"/>
+		<result property="winner" column="re_winner"/>
+		<result property="date" column="re_date"/>
+  		
+  		<association property="room" javaType="omok.mode.vo.Room">
+  			<id property="id" column="ro_id"/>
+			<result property="roomNum" column="ro_num"/>
+			<result property="bName" column="ro_b_u_name"/>
+			<result property="wName" column="ro_w_u_name"/>
+			<result property="full" column="ro_full"/>
+			<result property="closed" column="ro_closed"/>
+  		</association>
+  	
+  	</resultMap>
+  	
+	<insert id="insertResult">
+  		insert into result(re_winner, re_ro_id) values
+  		(#{winner}, #{roomId})
+  	</insert>
+  	
+  	<select id="selectBlackResult">
+  		select ro_w_u_name, if(re_winner = "BLACK","WIN","LOSE")
+  		from result
+  		join room on ro_id = re_ro_id
+  		where ro_b_u_name=#{id}
+  	</select>
+  	
+  	<select id="selectWhiteResult">
+  		select ro_w_u_name, if(re_winner = "WHITE","WIN","LOSE")
+  		from result
+  		join room on ro_id = re_ro_id
+  		where ro_w_u_name=#{id}
+  	</select>
+  	
+  </mapper>
