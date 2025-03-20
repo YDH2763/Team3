@@ -437,11 +437,13 @@ public class Client{
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
-		
+		int count=1;
 		List<Result> resultList=resultService.getResultList(id);
 		for(Result re : resultList) {
-			System.out.println(re.toString2());
+			System.out.println(count+". "+re.toString2());
+			count++;
 		}
+		count=0;
 		
 		try {
 			oos.writeUTF(id);

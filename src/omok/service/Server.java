@@ -386,13 +386,20 @@ public class Server {
 
 
 	private void showMyGibo(ObjectOutputStream oos, ObjectInputStream ois) {
+		
+		
+		
 		try {
 			id = ois.readUTF();
 			//게임 결과를 출력
+			int count=1;
 			List<Result> resultList=resultService.getResultList(id);
 			for(Result re : resultList) {
-				System.out.println(re);
+				System.out.println(count+". "+re.toString2());
+				count++;
 			}
+			count=0;
+			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 
 package omok.mode.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +20,9 @@ public class Result {
 	private Date date;
 	
 	private Room room;
+	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	
 //	public Result(String winner, int roomId) {
 //		this.winner=winner;	//re_winner
@@ -40,7 +44,7 @@ public class Result {
 	
 	
 	public String toString2() {
-		return "상대방 : "+winner+" 결과 : "+result+" 일시 : "+date;
+		return "상대방 : "+winner+" 결과 : "+result+" 일시 : "+simpleDateFormat.format(date) + " 방아이디 : "+roomId;
 	}
 	
 
