@@ -18,6 +18,15 @@ SELECT * FROM omok.result order by re_date DESC;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 
+
+SELECT g_count
+FROM omok.gibo
+where g_ro_id = 2
+order by g_ro_id, g_count desc
+limit 1;
+
+
+
 select * from result join room on re_ro_id=ro_id;
 
 -- 특정유저(dbehdgns2)가 흑팀(U_NAME=RO_B_U_NAME)일때 결과 출력

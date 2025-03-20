@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import omok.mode.vo.Chat;
+import omok.mode.vo.Field;
 import omok.mode.vo.Result;
 import omok.mode.vo.Room;
 import omok.mode.vo.Score;
@@ -30,6 +31,8 @@ public class Server {
    private RoomService roomService = new RoomServiceImp();
    private ResultService resultService = new ResultServiceImp();
    private ScoreService scoreService = new ScoreServiceImp();
+   private GiboService giboService = new GiboServiceImp();
+   
    
    
    public Server(Socket s) {
@@ -395,12 +398,39 @@ public class Server {
 			while(true) {
 				int resultNum = ois.readInt();
 				if(resultNum == -1) break;
+				else if(resultNum <= resultList.size() && resultNum > 0){
+					oos.writeBoolean(true);		//inListNum
+					oos.flush();
+					
+					Field field = new Field();
+					Result dbResult = resultList.get(resultNum - 1);
+					int maxGiboCount = giboService.getMaxCount(dbResult.getRoomId());
+					oos.writeInt(maxGiboCount);
+					oos.flush();
+					for(int i = 0; i <= maxGiboCount; i++) {
+						if(i != 0) {
+							int dbX = giboService.getX(i, dbResult.getRoomId());
+							int dbY = giboService.getY(i, dbResult.getRoomId());
+							field.setStone(dbX, dbY);
+							field.setBlack(!field.isBlack());							
+						}
+						oos.writeUTF(field.printField());
+						oos.flush();
+						if(i == maxGiboCount) return;
+						boolean next = ois.readBoolean();
+						if(!next) return;
+					}
+					
+					
+				}
 				else {
-					oos.writeUTF(resultNum + "번 플레이 기보 출력");
+					oos.writeBoolean(false);	//inListNum
 					oos.flush();
 				}
 			}
 		}catch(IOException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		

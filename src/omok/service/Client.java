@@ -435,13 +435,50 @@ public class Client{
 			try {
 	    		  while(true) {
 	    			  System.out.print("기보를 볼 목록번호를 선택하세요(종료는 -1): ");
-	    			  int resultNum = sc.nextInt();
+	    			  int resultNum = 0;
+	    			  try {
+	    				  resultNum = sc.nextInt();	
+	    				  sc.nextLine();
+	    			  } catch (InputMismatchException e) {
+	    				  System.out.println("입력이 올바르지 않습니다.");
+	    				  sc.nextLine();
+	    				  continue;
+	    			  }
 	    			  oos.writeInt(resultNum);
 	    			  oos.flush();
 	    			  if(resultNum == -1) break;
 	    			  
-	    			  String g = ois.readUTF();
-	    			  System.out.println(g);
+	    			  boolean inListNum = ois.readBoolean();
+	    			  if(!inListNum) {
+	    				  System.out.println("해당 번호는 리스트에 존재하지 않습니다.");
+	    				  continue;
+	    			  }
+	    			  int max = ois.readInt();
+	    			  
+	    			  for(int i = 0; i <= max; i++) {
+	    				  String field = ois.readUTF();
+	    				  System.out.println(field);
+	    				  if(i == max) return;
+	    				  while(true) {
+	    					  System.out.print("다음수 보기(p), 종료하기(q): ");
+	    					  String s = sc.next();
+	    					  sc.nextLine();
+	    					  if(s.equals("p")) {
+	    						  oos.writeBoolean(true);
+	    						  oos.flush();
+	    						  break;
+	    					  } else if(s.equals("q")) {
+	    						  System.out.println("기보 보기를 종료합니다.");
+	    						  oos.writeBoolean(false);
+	    						  oos.flush();
+	    						  return;
+	    					  } else {
+	    						  System.out.println("입력이 올바르지 않습니다.");
+	    						  continue;
+	    					  }
+	    				  }
+	    			  }
+	    			  
 	    		  }
 			} catch (Exception e) {
 				System.out.println("전적 메뉴 중 종료");

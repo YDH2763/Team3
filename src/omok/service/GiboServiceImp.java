@@ -35,4 +35,25 @@ public class GiboServiceImp implements GiboService{
 		return giboDao.insertGibo(gibo);
 	}
 
+
+	@Override
+	public int getX(int giboCount, int roomId) {
+		session.clearCache();
+		return giboDao.getX(giboCount, roomId);
+	}
+
+
+	@Override
+	public int getY(int giboCount, int roomId) {
+		session.clearCache();
+		return giboDao.getY(giboCount, roomId);
+	}
+
+
+	@Override
+	public int getMaxCount(int roomId) {
+		session.clearCache();
+		return giboDao.getMaxCount(roomId);
+	}
+
 }

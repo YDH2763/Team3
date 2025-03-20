@@ -12,8 +12,28 @@
     	</resultMap>
     	
     	<insert id="insertGibo" useGeneratedKeys="true" keyProperty="gibo.id">
-    		insert into gibo(g_count, g_x, g_y,g_ro_id) values
+    		insert into gibo(g_count, g_x, g_y, g_ro_id) values
     		(#{gibo.count}, #{gibo.x}, #{gibo.y}, #{gibo.roomId})
     	</insert>
+    	
+    	<select id="getX">
+    		select g_x
+    		from gibo
+    		where g_count = #{giboCount} and g_ro_id = #{roomId}
+    	</select>
+    	
+    	<select id="getY">
+    		select g_y
+    		from gibo
+    		where g_count = #{giboCount} and g_ro_id = #{roomId}
+    	</select>
+    	
+    	<select id="getMaxCount">
+    		select g_count
+			from gibo
+			where g_ro_id = #{roomId}
+			order by g_ro_id, g_count desc
+			limit 1
+    	</select>
     		
     </mapper>
