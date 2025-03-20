@@ -1,25 +1,50 @@
+
 package omok.mode.vo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Result {
 	
-	
+	private int id;
 	private String winner;
 	private int roomId;
+	private String result;
+	private Date date;
 	
-	public Result(String winner, int roomId) {
-		this.winner=winner;	//re_winner
-		this.roomId=roomId;	//re_ro_id
+	private Room room;
+	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	
+//	public Result(String winner, int roomId) {
+//		this.winner=winner;	//re_winner
+//		this.roomId=roomId;	//re_ro_id
+//	}
+	
+	
+	public Result(String winner, String result, Date date) {
+		this.winner = winner;
+		this.result = result;
+		this.date = date;
 	}
-	
-	public Result() {}
 	
 
 	@Override
 	public String toString() {
-		return "게임 번호 : "+roomId+" 이긴 사람 : "+ winner;
+		return "상대: " + winner + " 승패: " + result + " 시간: " + date;
+	}
+	
+	
+	public String toString2() {
+		return "상대방 : "+winner+" 결과 : "+result+" 일시 : "+simpleDateFormat.format(date) + " 방아이디 : "+roomId;
 	}
 	
 

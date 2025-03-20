@@ -36,20 +36,13 @@ public class ResultServiceImp implements ResultService {
 		return resultDao.insertResult(winner, id);
 	}
 
-	@Override
-	public List<Result> getBlackResult(String id) {
-		if(id == null) {
-			return null;
-		}
-		return resultDao.selectBlackResult(id);
-	}
 
 	@Override
-	public List<Result> getWhiteResult(String id) {
+	public List<Result> getResultList(String id) {
 		if(id == null) {
 			return null;
 		}
-		return resultDao.selectWhiteResult(id);
+		return resultDao.selectResultList(id);
 	}
 
 	

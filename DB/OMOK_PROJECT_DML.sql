@@ -14,7 +14,7 @@ INSERT INTO RESULT(RE_WINNER, RE_RO_ID) VALUES
 SELECT * FROM omok.user;
 SELECT * FROM omok.room;
 SELECT * FROM omok.gibo;
-SELECT * FROM omok.result;
+SELECT * FROM omok.result order by re_date DESC;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 
@@ -42,13 +42,45 @@ JOIN ROOM ON RO_ID = RE_RO_ID;
 SELECT RO_W_U_NAME AS 상대유저, IF(RE_WINNER = "BLACK", "WIN", "LOSE") AS 승패, RE_DATE AS 일시
 FROM RESULT
 JOIN ROOM ON RO_ID = RE_RO_ID
-WHERE RO_B_U_NAME = "dbehdgns1";
+WHERE RO_B_U_NAME = "dbehdgns1" ORDER BY RE_DATE DESC;
 
 -- 1일 때 백팀일때 결과
 SELECT RO_B_U_NAME AS 상대유저, IF(RE_WINNER = "WHITE", "WIN", "LOSE") AS 승패, RE_DATE AS 일시
 FROM RESULT
 JOIN ROOM ON RO_ID = RE_RO_ID
-WHERE RO_W_U_NAME = "dbehdgns1";
+WHERE RO_W_U_NAME = "dbehdgns1" ORDER BY RE_DATE DESC;
+
+/*위 결과를 합쳤을 때??=> 틀림*/
+SELECT 
+	IF(RO_W_U_NAME != "dbehdgns1", RO_W_U_NAME, RO_B_U_NAME)AS 상대유저,
+    IF(RE_WINNER = "WHITE", "WIN", 
+    ) AS 승패,
+    RE_DATE AS 일시
+FROM RESULT
+JOIN ROOM ON RO_ID = RE_RO_ID
+ORDER BY RE_DATE DESC;
+
+SELECT
+	IF(RO_W_U_NAME != "dbehdgns1", RO_W_U_NAME, RO_B_U_NAME)AS 상대유저,
+	IF(),
+    RE_DATE
+FROM RESULT
+JOIN ROOM ON RE_ID=RE_RO_ID
+ORDER BY RE_DATE DESC;
+
+SELECT 
+	IF(RO_W_U_NAME != "dbehdgns1", RO_W_U_NAME, RO_B_U_NAME)AS 상대유저,
+    
+    IF(RO_B_U_NAME = "dbehdgns1" AND RE_WINNER = "BLACK","WIN",
+	IF(RO_W_U_NAME = "dbehdgns1" AND RE_WINNER = "WHITE","WIN","LOSE")) AS 승패,
+    RE_DATE AS 일시
+FROM RESULT
+JOIN ROOM ON RO_ID = RE_RO_ID
+
+ORDER BY RE_DATE DESC;
+
+SELECT
+	IF(
 
 -- 특정유저(dbehdgns2)가 흑팀(U_NAME=RO_B_U_NAME)일때 해당 유저와 같은 진영으로 플레이한`방아이디`(3)기보 출력
 SELECT U_NAME AS"유저(흑팀)", G_RO_ID AS"방 아이디" , G_COUNT AS"수", G_X AS"X좌표", G_Y AS"Y좌표" FROM GIBO
