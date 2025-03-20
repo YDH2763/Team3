@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import omok.mode.vo.Chat;
+import omok.mode.vo.Gibo;
 import omok.mode.vo.Result;
 import omok.mode.vo.Score;
 
@@ -27,6 +28,7 @@ public class Client{
 	
 	private ScoreService scoreService = new ScoreServiceImp();
 	private ResultService resultService = new ResultServiceImp();
+	private GiboService giboService = new GiboServiceImp();
 	
 	
 	public Client(Socket s) {
@@ -444,7 +446,23 @@ public class Client{
 			System.out.println(count+". "+re.toString2());
 			count++;
 		}
-		count=0;
+		
+		System.out.println("기보를 조회할 방 아이디를 입력하세요.");
+		int s=sc.nextInt();
+		sc.nextLine();
+		if(s<count && s>0) {
+			List<Gibo> giboList = giboService.getGiboList(s);
+			for(Gibo gi : giboList) {
+				System.out.println(gi.toString());
+			}
+			count=1;
+			System.out.println("기보를 출력했습니다.");
+		}
+		else {
+			count=1;
+			System.out.println("잘못입력하여 선택화면으로 돌아갑니다.");
+		}
+		
 		try {
 			oos.writeUTF(id);
 			oos.flush();
@@ -452,7 +470,7 @@ public class Client{
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("기보를 출력했습니다.");
+		
 	}
 
 	private void sendChat(ObjectOutputStream oos) {

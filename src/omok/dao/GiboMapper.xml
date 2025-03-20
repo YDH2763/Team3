@@ -15,5 +15,12 @@
     		insert into gibo(g_count, g_x, g_y,g_ro_id) values
     		(#{gibo.count}, #{gibo.x}, #{gibo.y}, #{gibo.roomId})
     	</insert>
+    	
+    	<select id="selectGiboList" resultMap="GiboMap">
+    		select * from gibo
+    		where g_ro_id=#{s}
+    	</select>
+    	
+    	
     		
     </mapper>
