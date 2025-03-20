@@ -431,6 +431,22 @@ public class Client{
 			System.out.println("------------게임 결과------------");
 			System.out.println(resultListUTF);
 			System.out.println("-------------------------------");
+			
+			try {
+	    		  while(true) {
+	    			  System.out.print("기보를 볼 목록번호를 선택하세요(종료는 -1): ");
+	    			  int resultNum = sc.nextInt();
+	    			  oos.writeInt(resultNum);
+	    			  oos.flush();
+	    			  if(resultNum == -1) break;
+	    			  
+	    			  String g = ois.readUTF();
+	    			  System.out.println(g);
+	    		  }
+			} catch (Exception e) {
+				System.out.println("전적 메뉴 중 종료");
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

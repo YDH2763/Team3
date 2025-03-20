@@ -78,6 +78,7 @@ public class Server {
                int mainMenu = ois.readInt();
                if(mainMenu == 5) {
                   System.out.println(oos + "메인 메뉴 종료, 로그인 메뉴로 복귀");
+                  userService.setOffline(id);
                   break;
                }
                System.out.println("[" + oos + "메인 메뉴 " + mainMenu + " 입력 받음]");
@@ -85,10 +86,13 @@ public class Server {
             }
          } catch (SocketException e) {
              System.out.println("[클라이언트 강제 종료]");
+             userService.setOffline(id);
           } catch (EOFException e) {
               System.out.println("[클라이언트 강제 종료]");
+              userService.setOffline(id);
            } catch (Exception e) {
             System.out.println("[메인 메뉴 수신 중 예기치 못한 오류 발생]");
+            userService.setOffline(id);
             e.printStackTrace();
          }
          break;
@@ -120,6 +124,7 @@ public class Server {
 				   oos.flush();
 				   return false;   
 			   }
+			   userService.setOnline(id);
 			   oos.writeInt(1);
 			   oos.flush();
 			   return true;
@@ -203,7 +208,7 @@ public class Server {
     			  runResultMenu(resultMenu, oos,ois);
     		  }
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("전적 메뉴 중 종료");
 		}
           System.out.println(oos + "전적 보기 종료, 메뉴로 복귀");
           break;
@@ -387,6 +392,14 @@ public class Server {
 			}
 			oos.writeUTF(resultListUTF);
 			oos.flush();
+			while(true) {
+				int resultNum = ois.readInt();
+				if(resultNum == -1) break;
+				else {
+					oos.writeUTF(resultNum + "번 플레이 기보 출력");
+					oos.flush();
+				}
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
