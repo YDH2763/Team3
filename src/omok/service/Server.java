@@ -134,11 +134,17 @@ public class Server {
 		   boolean existsUser = userService.contains(user);
 		   
 		   if(existsUser) {
-			   oos.writeBoolean(true);
+			   String online = userService.getOnline(id);
+			   if(online.equals("Y")) {
+				   oos.writeInt(3);
+				   oos.flush();
+				   return false;   
+			   }
+			   oos.writeInt(1);
 			   oos.flush();
 			   return true;
 		   } else {
-			   oos.writeBoolean(false);
+			   oos.writeInt(2);
 			   oos.flush();
 			   return false;
 		   }
@@ -354,28 +360,24 @@ public class Server {
 
 	private void showMyResult(ObjectOutputStream oos, ObjectInputStream ois) {
 		try {
-			id = ois.readUTF();
 			String black="BLACK";
 			String white="WHITE";
 			//흑전적(승,패,무,승률)
 			Score blackScore =
 			scoreService.getBlackScore(id,black);
-			System.out.println("흑전적 : "+blackScore.toString());
 			//백전적(승,패,무,승률)
 			Score whiteScore =
 			scoreService.getWhiteScore(id,white);
-			System.out.println("백전적 : "+whiteScore.toString());
 			//전체전적(승,패,무,승률)
 			Score allScore=new Score(id,black,
 					(blackScore.getCount()+whiteScore.getCount()),
 					(blackScore.getWin()+whiteScore.getWin()),
 					(blackScore.getLose()+whiteScore.getLose()),
 					(blackScore.getDraw()+whiteScore.getDraw()));
-			System.out.println("전체전적 : "+allScore.toString());
 			
-			oos.writeObject(blackScore);
-			oos.writeObject(whiteScore);
-			oos.writeObject(allScore);
+			oos.writeUTF(blackScore.toString());
+			oos.writeUTF(whiteScore.toString());
+			oos.writeUTF(allScore.toString());
 			oos.flush();
 			
 		}catch(IOException e) {

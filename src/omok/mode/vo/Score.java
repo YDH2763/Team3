@@ -1,12 +1,18 @@
 package omok.mode.vo;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Score {
+public class Score implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3254412008636174922L;
 	private int num;
 	private String position;
 	private int count;
