@@ -15,10 +15,10 @@ public class ScoreServiceImp implements ScoreService{
 	
 	private ScoreDAO scoreDao;
 	
+	SqlSession session;
 	public ScoreServiceImp() {
 		String resource = "omok/config/mybatis-config.xml";
 	    InputStream inputStream;
-	    SqlSession session;
 	    try {
 	    	inputStream = Resources.getResourceAsStream(resource);
 	    	SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -31,11 +31,13 @@ public class ScoreServiceImp implements ScoreService{
 
 	@Override
 	public Score getBlackScore(String id, String black) {
+		session.clearCache();
 		return scoreDao.selectBlackScore(id,black);
 	}
 
 	@Override
 	public Score getWhiteScore(String id, String white) {
+		session.clearCache();
 		return scoreDao.selectWhiteScore(id,white);
 	}
 

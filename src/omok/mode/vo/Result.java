@@ -36,15 +36,10 @@ public class Result {
 		this.date = date;
 	}
 	
-
+	
 	@Override
 	public String toString() {
-		return "상대: " + winner + " 승패: " + result + " 시간: " + date;
-	}
-	
-	
-	public String toString2() {
-		return "상대방 : "+winner+" 결과 : "+result+" 일시 : "+simpleDateFormat.format(date) + " 방아이디 : "+roomId;
+		return "상대: "+ winner + "\n   승패: "+result+"\n   일시: "+simpleDateFormat.format(date) + "\n   방아이디 : " + roomId;
 	}
 	
 

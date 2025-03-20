@@ -15,10 +15,10 @@ public class RoomServiceImp implements RoomService{
 	
 	private RoomDAO roomDao;
 	
+	SqlSession session;
 	public RoomServiceImp() {
 		String resource = "omok/config/mybatis-config.xml";
 	      InputStream inputStream;
-	      SqlSession session;
 	      try {
 	    	  inputStream = Resources.getResourceAsStream(resource);
 	    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -54,6 +54,7 @@ public class RoomServiceImp implements RoomService{
 
 	@Override
 	public boolean containsOpeningRoom(Room room) {
+		session.clearCache();
 		Room dbroom = roomDao.selectOpeningRoom(room);
 			
 		if(dbroom != null) {
@@ -64,6 +65,7 @@ public class RoomServiceImp implements RoomService{
 	
 	@Override
 	public String getFull(Room room) {
+		session.clearCache();
 		return roomDao.getFull(room);
 	};
 

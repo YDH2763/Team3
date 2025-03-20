@@ -15,10 +15,10 @@ public class UserServiceImp implements UserService{
 
 	private UserDAO userDao;
 	
+	SqlSession session;
 	public UserServiceImp() {
 		String resource = "omok/config/mybatis-config.xml";
 	      InputStream inputStream;
-	      SqlSession session;
 	      try {
 	    	  inputStream = Resources.getResourceAsStream(resource);
 	    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -54,7 +54,8 @@ public class UserServiceImp implements UserService{
 
 	@Override
 	public boolean contains(User user) {
-		
+
+  	  	session.clearCache();
 		if(user.getPw() == "") {
 			//중복된 아이디가 있는지 체크함
 			String id = userDao.checkId(user);
@@ -80,13 +81,12 @@ public class UserServiceImp implements UserService{
 
 	@Override
 	public String getOnline(String userName) {
-		
+		session.clearCache();
 		return userDao.getOnline(userName);
 	}
 
 	@Override
 	public void setOffline(String userName) {
-		
 		userDao.setOffline(userName);
 	}
 

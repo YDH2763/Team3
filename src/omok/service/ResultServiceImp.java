@@ -15,11 +15,11 @@ import omok.mode.vo.Result;
 public class ResultServiceImp implements ResultService {
 	
 	private ResultDAO resultDao;
+	SqlSession session;
 	
 	public ResultServiceImp() {
 		String resource = "omok/config/mybatis-config.xml";
 	      InputStream inputStream;
-	      SqlSession session;
 	      try {
 	    	  inputStream = Resources.getResourceAsStream(resource);
 	    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -39,6 +39,7 @@ public class ResultServiceImp implements ResultService {
 
 	@Override
 	public List<Result> getResultList(String id) {
+		session.clearCache();
 		if(id == null) {
 			return null;
 		}

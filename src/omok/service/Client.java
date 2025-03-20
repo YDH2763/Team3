@@ -5,12 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import omok.mode.vo.Chat;
-import omok.mode.vo.Result;
-import omok.mode.vo.Score;
 
 /*
  * Client 클래스를 이용하여
@@ -24,9 +21,6 @@ public class Client{
 	private String pw;
 	private final static String EXIT = "q";
 	private Scanner sc = new Scanner(System.in);
-	
-	private ScoreService scoreService = new ScoreServiceImp();
-	private ResultService resultService = new ResultServiceImp();
 	
 	
 	public Client(Socket s) {
@@ -405,7 +399,7 @@ public class Client{
 			case 2:
 				showMyGibo(ois,oos);
 				break;
-			case 3:
+			case 3: 
 				break;
 			default:
 				System.out.println("없는 메뉴입니다.");
@@ -432,22 +426,15 @@ public class Client{
 	}
 
 	private void showMyGibo(ObjectInputStream ois, ObjectOutputStream oos) {
-		
-		int count=1;
-		List<Result> resultList=resultService.getResultList(id);
-		for(Result re : resultList) {
-			System.out.println(count+". "+re.toString2());
-			count++;
-		}
-		count=0;
 		try {
-			oos.writeUTF(id);
-			oos.flush();
-			
-		}catch(IOException e) {
+			String resultListUTF = ois.readUTF();
+			System.out.println("------------게임 결과------------");
+			System.out.println(resultListUTF);
+			System.out.println("-------------------------------");
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("기보를 출력했습니다.");
+		
 	}
 
 	private void sendChat(ObjectOutputStream oos) {

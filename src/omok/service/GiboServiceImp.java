@@ -14,10 +14,10 @@ import omok.mode.vo.Gibo;
 public class GiboServiceImp implements GiboService{
 	private GiboDAO giboDao;
 	
+	SqlSession session;
 	public GiboServiceImp() {
 		String resource = "omok/config/mybatis-config.xml";
 	      InputStream inputStream;
-	      SqlSession session;
 	      try {
 	    	  inputStream = Resources.getResourceAsStream(resource);
 	    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -32,7 +32,6 @@ public class GiboServiceImp implements GiboService{
 
 	
 	public boolean insertGibo(Gibo gibo) {
-		
 		return giboDao.insertGibo(gibo);
 	}
 

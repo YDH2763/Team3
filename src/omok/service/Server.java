@@ -2,7 +2,6 @@ package omok.service;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -10,16 +9,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import omok.dao.UserDAO;
 import omok.mode.vo.Chat;
 import omok.mode.vo.Result;
-import omok.mode.vo.Score;
 import omok.mode.vo.Room;
+import omok.mode.vo.Score;
 import omok.mode.vo.User;
 
 public class Server {
@@ -41,19 +34,6 @@ public class Server {
    
    public Server(Socket s) {
       this.s = s;
-//      String resource = "omok/config/mybatis-config.xml";
-//      InputStream inputStream;
-//      SqlSession session;
-//      try {
-//    	  inputStream = Resources.getResourceAsStream(resource);
-//    	  SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//    	  session = sessionFactory.openSession(true);
-//    	  userDao = session.getMapper(UserDAO.class);
-//      } catch (IOException e) {
-//    	  System.out.println("[클라이언트 접속 종료]");
-//      } catch (Exception e) {
-//    	  e.printStackTrace();
-//      }
    }
 
    
@@ -216,7 +196,15 @@ public class Server {
          System.out.println(oos + "방 입장 종료, 메뉴로 복귀");
          break;
       case 4:
-    	  runResultMenu(oos,ois);
+    	  try {
+    		  while(true) {
+    			  int resultMenu = ois.readInt();
+    			  if(resultMenu == 3) break;
+    			  runResultMenu(resultMenu, oos,ois);
+    		  }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
           System.out.println(oos + "전적 보기 종료, 메뉴로 복귀");
           break;
    
@@ -334,10 +322,8 @@ public class Server {
 	
 	
 	
-	private void runResultMenu(ObjectOutputStream oos, ObjectInputStream ois) {
-		 try {
-			 int resultMenu = ois.readInt();
-			 switch(resultMenu) {
+	private void runResultMenu(int resultMenu, ObjectOutputStream oos, ObjectInputStream ois) {
+		 switch(resultMenu) {
 			 case 1:
 				 showMyResult(oos, ois);
 		         System.out.println(oos + "전적 보기 완료");
@@ -350,11 +336,6 @@ public class Server {
 		     default:
 		    	 break;
 			 }
-			 
-		 }catch(IOException e) {
-				e.printStackTrace();
-			}
-		
 	}
 
 
@@ -375,9 +356,9 @@ public class Server {
 					(blackScore.getLose()+whiteScore.getLose()),
 					(blackScore.getDraw()+whiteScore.getDraw()));
 			
-			oos.writeUTF(blackScore.toString());
-			oos.writeUTF(whiteScore.toString());
-			oos.writeUTF(allScore.toString());
+			oos.writeUTF("흑 전적: " + blackScore.toString());
+			oos.writeUTF("백 전적: " + whiteScore.toString());
+			oos.writeUTF("전체 전적: " + allScore.toString());
 			oos.flush();
 			
 		}catch(IOException e) {
@@ -388,20 +369,24 @@ public class Server {
 
 
 	private void showMyGibo(ObjectOutputStream oos, ObjectInputStream ois) {
-		
-		
-		
 		try {
-			id = ois.readUTF();
 			//게임 결과를 출력
 			int count=1;
+			String resultListUTF = "";
 			List<Result> resultList=resultService.getResultList(id);
+			System.out.println(resultList.size());
+			if(resultList.size() == 0) {
+				resultListUTF += "플레이 내역이 없습니다.";
+				oos.writeUTF(resultListUTF);
+				oos.flush();
+				return;
+			}
 			for(Result re : resultList) {
-				System.out.println(count+". "+re.toString2());
+				resultListUTF += count + ". " + re.toString() + "\n";
 				count++;
 			}
-			count=0;
-			
+			oos.writeUTF(resultListUTF);
+			oos.flush();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -499,18 +484,6 @@ public class Server {
          
       } catch (Exception e) {
          System.out.println("메세지 송신 중 예기치 못한 오류 발생");
-      }
-   }
-   
-   private void send(ObjectOutputStream oos, Object obj) {
-      if(oos == null || obj == null) {
-         return;
-      }
-      try {
-            oos.writeObject(obj);
-            oos.flush();
-      } catch (Exception e) {
-         System.out.println("Object 송신 중 예기치 못한 오류 발생");
       }
    }
 }
