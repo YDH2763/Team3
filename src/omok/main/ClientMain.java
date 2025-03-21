@@ -9,8 +9,8 @@ public class ClientMain {
 
 	public static void main(String[] args) {
 		int port = 5001;
-//		String ip = "192.168.40.74";
-		String ip = "127.0.0.1";
+		String ip = "192.168.40.74";
+//		String ip = "127.0.0.1";
 		Scanner sc = new Scanner(System.in);
 		
 		try {
