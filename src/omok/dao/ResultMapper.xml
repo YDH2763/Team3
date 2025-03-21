@@ -36,6 +36,7 @@
   			re_ro_id as re_ro_id
   		from result
   		join room on ro_id=re_ro_id
+  		where ro_b_u_name = #{id} or ro_w_u_name = #{id}
   		order by re_date desc
   		
   	</select>
