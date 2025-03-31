@@ -18,6 +18,22 @@ SELECT * FROM omok.result order by re_date DESC;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 
+select
+	if(ro_w_u_name != "박소은", ro_w_u_name, ro_b_u_name) as re_winner,
+	if(ro_b_u_name = "박소은" and re_winner ="BLACK","WIN",
+	if(ro_w_u_name = "박소은" and re_winner ="WHITE","WIN","LOSE")) as re_result,
+	RE_DATE as re_date,
+	re_ro_id as re_ro_id
+from result
+join room on ro_id=re_ro_id
+where ro_b_u_name = "박소은" or ro_w_u_name = "박소은"
+order by re_date desc;
+
+select *
+from result
+join room on ro_id=re_ro_id
+order by re_date desc;
+
 
 SELECT g_count
 FROM omok.gibo

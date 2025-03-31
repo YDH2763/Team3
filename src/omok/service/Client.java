@@ -431,7 +431,7 @@ public class Client{
 			System.out.println("------------게임 결과------------");
 			System.out.println(resultListUTF);
 			System.out.println("-------------------------------");
-			
+			if(resultListUTF.equals("플레이 내역이 없습니다.")) return;
 			try {
 	    		  while(true) {
 	    			  System.out.print("기보를 볼 목록번호를 선택하세요(종료는 -1): ");
