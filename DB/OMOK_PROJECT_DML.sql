@@ -1,16 +1,5 @@
 USE OMOK; 
 
-INSERT INTO USER(U_NAME, U_PW) VALUES
-	("정순형", "1836"), ("박소은", "6974"),
-    ("빅토리아", "5877"), ("김가람", "4485");
-
-INSERT ROOM(RO_NUM, RO_B_U_NAME, RO_W_U_NAME) VALUES
-	(15, "정순형", "박소은"), (1, "김가람", "빅토리아"),
-	(7, "정순형", "빅토리아"), (9, "김가람", "박소은");
-    
-INSERT INTO RESULT(RE_WINNER, RE_RO_ID) VALUES
-	("BLACK", 1), ("DRAW", 2), ("BLACK", 3), ("BLACK", 4);
-
 SELECT * FROM omok.user;
 SELECT * FROM omok.room;
 SELECT * FROM omok.gibo;
@@ -18,28 +7,16 @@ SELECT * FROM omok.result order by re_date DESC;
 SELECT * FROM omok.score;
 SELECT * FROM omok.winning_rate;
 
-select
-	if(ro_w_u_name != "박소은", ro_w_u_name, ro_b_u_name) as re_winner,
-	if(ro_b_u_name = "박소은" and re_winner ="BLACK","WIN",
-	if(ro_w_u_name = "박소은" and re_winner ="WHITE","WIN","LOSE")) as re_result,
-	RE_DATE as re_date,
-	re_ro_id as re_ro_id
-from result
-join room on ro_id=re_ro_id
-where ro_b_u_name = "박소은" or ro_w_u_name = "박소은"
-order by re_date desc;
-
-select *
-from result
-join room on ro_id=re_ro_id
-order by re_date desc;
-
 
 SELECT g_count
 FROM omok.gibo
 where g_ro_id = 2
 order by g_ro_id, g_count desc
 limit 1;
+
+select g_x
+from gibo
+where g_count = 8 and g_ro_id = 1;
 
 
 
